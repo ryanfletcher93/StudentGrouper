@@ -1,0 +1,1 @@
+This is a project to take in a set of students and a list where each student ists sutdents they want/don't want to be in the same classroom with. This then takes these inputs and and returs the students grouped into appropriate sized classrooms.
