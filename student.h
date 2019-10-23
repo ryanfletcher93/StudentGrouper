@@ -5,6 +5,8 @@
 
 #include <string>
 
+class StudentPreference;
+
 class Student
 {
 public:
@@ -12,15 +14,22 @@ public:
 
     Student(std::string firstName, std::string middleName, std::string familyName, int idNumber);
 
-    void setStudentPreference(StudentPreference studentPreference) {
-        this->studentPreference = studentPreference;
-    }
-    StudentPreference getStudentPreference() {
-        return studentPreference;
-    }
+    bool isStudentInPreference(Student s);
+
+    void setStudentPreference(StudentPreference *studentPreference);
+    StudentPreference getStudentPreference();
 
     int getStudentId() {
         return idNumber;
+    }
+    std::string getFirstName() {
+        return firstName;
+    }
+    std::string getMiddleName() {
+        return middleName;
+    }
+    std::string getFamilyName() {
+        return familyName;
     }
 
 private:
@@ -28,9 +37,9 @@ private:
     std::string middleName;
     std::string familyName;
 
-    const int idNumber;
+    int idNumber;
 
-    StudentPreference studentPreference;
+    StudentPreference *studentPreference;
 };
 
 #endif // STUDENT_H

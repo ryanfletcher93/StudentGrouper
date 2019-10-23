@@ -12,7 +12,15 @@ public:
 
     void setConfigFileAndParse(std::string configFile);
 
+    void writeOutputToFile(std::string filePath, GroupedStudents groupedStudents);
+
+    StudentSet getStudentSet();
+
+    GroupedStudents convertStudentSetToGroupedStudents(StudentSet ss);
+
 private:
+    std::string createCsvLineFromStudent(Student s);
+
     CsvParser csvParser;
     StudentSet studentSet;
 };

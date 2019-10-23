@@ -60,17 +60,44 @@ void CsvParser::addStudents(std::vector<std::string> csvContents, std::unique_pt
 
 void CsvParser::addStudentPreferences(std::vector<std::string> csvContents, std::unique_ptr<StudentSet>& studentSet) {
     Student currStudent;
-    StudentPreference studentPreference;
     for (std::string line : csvContents) {
-        //TODO: Get specify student preference here
+        std::stringstream ss(line);
+        std::string token;
 
-        std::pair<bool, Student&> currStudent = studentSet->getStudentById(1);
-        if (currStudent.first) {
-            currStudent.second.setStudentPreference(studentPreference);
+        std::vector<std::string> tokenisedLine;
+        while (std::getline(ss, token, ',')) {
+            tokenisedLine.push_back(token);
         }
-        else {
-            throw "Could not find student";
+
+        if (tokenisedLine.size() != 10) {
+            throw "Invalid tokenised csv line length";
         }
+
+        int currStudentId = std::stoi(tokenisedLine.at(3));
+
+        std::pair<bool, Student&> currStudentPair = studentSet->getStudentById(currStudentId);
+        Student &student = currStudentPair.second;
+        if (!currStudentPair.first) {
+            std::string message = "Could not find student with id " + std::to_string(currStudentId);
+            throw message;
+        }
+
+        std::vector<Student> preferredStudents;
+        for (int i=4; i<10; i++) {
+            std::string studentId = tokenisedLine.at(i);
+            int id = std::stoi(studentId);
+            auto currStudentPreferencePair = studentSet->getStudentById(id);
+
+            if (!currStudentPreferencePair.first) {
+                std::string message = "Could not find student with id " + std::to_string(id);
+                throw message;
+            }
+
+            preferredStudents.push_back(currStudentPreferencePair.second);
+        }
+
+        StudentPreference *studentPreference = new StudentPreference(preferredStudents);
+        student.setStudentPreference(studentPreference);
     }
 }
 
@@ -83,7 +110,7 @@ Student CsvParser::getStudentFromCsvFile(std::string line) {
         tokenisedLine.push_back(token);
     }
 
-    if (tokenisedLine.size() != 4) {
+    if (tokenisedLine.size() != 10) {
         throw "Invalid tokenised csv line length";
     }
 

@@ -15,7 +15,11 @@ public:
 
     std::pair<bool, Student&> getStudentById(int id);
 
-    GroupedStudents createOptimalDistribution();
+    std::vector<Student> getStudentList() {
+        return students;
+    }
+
+    //GroupedStudents createOptimalDistribution();
 
 private:
     std::vector<Student> students;

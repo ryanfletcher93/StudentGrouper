@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
 }
 
 MainWindow::~MainWindow()
@@ -18,9 +17,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_selectStudentCsvButton_clicked()
 {
-    std::string filePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\testData.csv";
-    QString qFilePath = QString::fromStdString(filePath);
+    QString qFilePath = QString::fromStdString(inputCsvFilePath);
     ui->csvFilePathDisplay->setText(qFilePath);
 
-    bea.setConfigFileAndParse(filePath);
+    bea.setConfigFileAndParse(inputCsvFilePath);
+}
+
+void MainWindow::on_analyseDataButton_clicked()
+{
+    StudentSet ss = bea.getStudentSet();
+    GroupedStudents gs = bea.convertStudentSetToGroupedStudents(ss);
+    this->groupedStudents = StudentSetAnalyser::reduceGroups(gs);
+}
+
+void MainWindow::on_exportCsvButton_clicked()
+{
+    QString qExportFilePath = QString::fromStdString(exportCsvFilePath);
+    ui->exportCsvDisplay->setText(qExportFilePath);
+
+    bea.writeOutputToFile(exportCsvFilePath, groupedStudents);
 }
