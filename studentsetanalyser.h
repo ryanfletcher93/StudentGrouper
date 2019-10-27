@@ -11,7 +11,7 @@ class StudentSetAnalyser
 public:
     StudentSetAnalyser();
 
-    static GroupedStudents groupStudents(StudentSet studentSet);
+    static GroupedStudents groupStudents(StudentSet studentSet, int numGroups);
 
     static GroupedStudents reduceGroups(GroupedStudents groupedStudents);
 

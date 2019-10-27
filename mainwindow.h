@@ -18,8 +18,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    const std::string inputCsvFilePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\mockCsv.csv";
-    const std::string exportCsvFilePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\outputCsv.csv";
+    const bool testing = true;
+
+    const std::string inputCsvFilePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\setup\\mockCsvInput.csv";
+    const std::string exportCsvFilePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\setup\\mockCsvOutput.csv";
 
 private slots:
     void on_selectStudentCsvButton_clicked();

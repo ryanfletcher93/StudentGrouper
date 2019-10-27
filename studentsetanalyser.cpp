@@ -7,8 +7,7 @@ StudentSetAnalyser::StudentSetAnalyser()
 
 }
 
-GroupedStudents StudentSetAnalyser::groupStudents(StudentSet studentSet) {
-    const int numGroups = 5;
+GroupedStudents StudentSetAnalyser::groupStudents(StudentSet studentSet, int numGroups) {
     GroupedStudents finalGroupedStudents(studentSet);
     while (floor(finalGroupedStudents.size()/2) > numGroups) {
         finalGroupedStudents = reduceGroups(finalGroupedStudents);
@@ -83,41 +82,41 @@ void StudentSetAnalyser::addGroupsToRemainder(GroupedStudents& gs, int numGroups
 
 void StudentSetAnalyser::addRemainderToRestOfGroup(GroupedStudents& gs) {
     // Loop through each student in remainder and assign to best group evenly
-    int existingGroupSize = (int) (*gs.begin()).size();
-    int numberGroups = (int) gs.size();
-    int remainderSize = (int) gs.sizeRemainder();
-    int additionalStudents = (int) ceil(remainderSize / numberGroups);
+    int existingGroupSize = static_cast<int> ((*gs.begin()).size());
+    int numberGroups = static_cast<int> (gs.size());
+    int remainderSize = static_cast<int> (gs.sizeRemainder());
+    int additionalStudents = static_cast<int> (ceil(remainderSize / numberGroups));
     int maxGroupSize = existingGroupSize + additionalStudents;
 
-    // For each student in remainder, add to first viable group
-    // TODO: Do more than just first, find best group to pust student in
-    for (auto studentIt = gs.beginRemainder(); studentIt != gs.endRemainder(); studentIt++) {
-        int groupCompatibility = 0;
-
+    // For each student in remainder, add to most viable group
+    for (auto remainderIt = gs.beginRemainder(); remainderIt != gs.endRemainder(); remainderIt++) {
+        int bestGroupCompatibility = 0;
+        std::list<std::list<Student>>::iterator it;
         for (auto groupIt = gs.begin(); groupIt != gs.end(); groupIt++) {
-            if ((int) (*groupIt).size() < maxGroupSize) {
-                (*groupIt).push_front(*studentIt);
-                break;
+            // Check if group is not fully allocated
+            if (static_cast<int> ((*groupIt).size()) < maxGroupSize) {
+                int groupCompatability = calculateStudentCompatability(std::list<Student> {*remainderIt}, *groupIt);
+                if (groupCompatability > bestGroupCompatibility) {
+                    bestGroupCompatibility = groupCompatability;
+                    it = groupIt;
+                }
             }
         }
 
-        //gs.eraseRemainder(studentIt);
+        // Add remainder Student to best group
+        (*it).push_front(*remainderIt);
     }
+
+    gs.eraseAllRemainders();
 }
 
 int StudentSetAnalyser::calculateStudentCompatability(std::list<Student> studentGroup1,
                                                       std::list<Student> studentGroup2) {
-    // TODO: Analyse intire list, not just first
-    // TODO: Account for similar preferences between students
     int total = 0;
-    bool s2InS1Pref = (*studentGroup1.begin()).isStudentInPreference(*studentGroup2.begin());
-    if (s2InS1Pref) {
-        total += 2;
-    }
-
-    bool s1InS2Pref = (*studentGroup2.begin()).isStudentInPreference(*studentGroup1.begin());
-    if (s1InS2Pref) {
-        total += 2;
+    for (auto s1 : studentGroup1) {
+        for (auto s2 : studentGroup2) {
+            total += Student::calculateHappiness(s1, s2);
+        }
     }
 
     return total;

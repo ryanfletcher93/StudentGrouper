@@ -14,3 +14,17 @@ GroupedStudents::GroupedStudents(StudentSet studentSet) {
 std::list<std::list<Student>> GroupedStudents::getGroupedStudents() {
     return this->groupedStudents;
 }
+
+int GroupedStudents::calculateHappinessScore() {
+    int total = 0;
+
+    for (auto studentGroupIt : this->groupedStudents) {
+        for (auto s1 : (studentGroupIt)) {
+            for (auto s2 : studentGroupIt) {
+                total += Student::calculateHappiness(s1, s2);
+            }
+        }
+    }
+
+    return total;
+}

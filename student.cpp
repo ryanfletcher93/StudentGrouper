@@ -19,3 +19,20 @@ StudentPreference Student::getStudentPreference() {
 bool Student::isStudentInPreference(Student s) {
     return this->studentPreference->isStudentInPreferences(s);
 }
+
+
+int Student::calculateHappiness(Student s1, Student s2) {
+    int total = 0;
+
+    if (s1.getStudentId() != s2.getStudentId()) {
+        if (s1.isStudentInPreference(s2)) {
+            total += 1;
+        }
+
+        if (s2.isStudentInPreference(s1)) {
+            total += 1;
+        }
+    }
+
+    return total;
+}

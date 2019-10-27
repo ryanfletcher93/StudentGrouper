@@ -19,11 +19,13 @@ MainWindow::~MainWindow()
 void MainWindow::on_selectStudentCsvButton_clicked()
 {
     QString fileName;
-    /*
-    QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open Image"), "/home/jana", tr("*.csv"));
-        */
-    fileName = QString::fromStdString(inputCsvFilePath);
+    if (testing) {
+        fileName = QString::fromStdString(inputCsvFilePath);
+    }
+    else {
+        QString fileName = QFileDialog::getOpenFileName(this,
+            tr("Open Image"), "/home/jana", tr("*.csv"));
+    }
 
     ui->csvFilePathDisplay->setText(fileName);
 
@@ -33,17 +35,25 @@ void MainWindow::on_selectStudentCsvButton_clicked()
 void MainWindow::on_analyseDataButton_clicked()
 {
     StudentSet ss = bea.getStudentSet();
-    this->groupedStudents = StudentSetAnalyser::groupStudents(ss);
+
+    int numGroups = ui->numberGroupsDisplay->text().toInt();
+    this->groupedStudents = StudentSetAnalyser::groupStudents(ss, numGroups);
+
+    int happinessScore = groupedStudents.calculateHappinessScore();
+    QString happinessScoreString = QString::number(happinessScore);
+    ui->happinessScoreDisplay->setText(happinessScoreString);
 }
 
 void MainWindow::on_exportCsvButton_clicked()
 {
     QString qExportFilePath;
-    /*
-    QString qExportFilePath = QFileDialog::getSaveFileName(this,
-            tr("Save Image"), "abc", tr("*.csv"));
-            */
-    qExportFilePath = QString::fromStdString(exportCsvFilePath);
+    if (testing) {
+        qExportFilePath = QString::fromStdString(exportCsvFilePath);
+    }
+    else {
+        QString qExportFilePath = QFileDialog::getSaveFileName(this,
+                tr("Save Image"), "abc", tr("*.csv"));
+    }
 
     ui->exportCsvDisplay->setText(qExportFilePath);
 

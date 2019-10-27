@@ -23,6 +23,8 @@ public:
 
     std::list<std::list<Student>> getGroupedStudents();
 
+    int calculateHappinessScore();
+
     iterator begin() {
         return groupedStudents.begin();
     }
@@ -55,6 +57,10 @@ public:
 
     void eraseRemainder(remainderIterator remainderIt) {
         remainderStudents.erase(remainderIt);
+    }
+
+    void eraseAllRemainders() {
+        remainderStudents.clear();
     }
 
     void addToRemainder(std::list<Student> studentList) {

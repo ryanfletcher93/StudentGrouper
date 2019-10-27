@@ -16,6 +16,8 @@ public:
 
     bool isStudentInPreference(Student s);
 
+    static int calculateHappiness(Student s1, Student s2);
+
     void setStudentPreference(StudentPreference *studentPreference);
     StudentPreference getStudentPreference();
 
