@@ -16,8 +16,6 @@ public:
 
     StudentSet getStudentSet();
 
-    GroupedStudents convertStudentSetToGroupedStudents(StudentSet ss);
-
 private:
     std::string createCsvLineFromStudent(Student s);
 

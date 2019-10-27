@@ -11,9 +11,13 @@ class StudentSetAnalyser
 public:
     StudentSetAnalyser();
 
-    static GroupedStudents createOptimalGrouping(StudentSet studentSet);
+    static GroupedStudents groupStudents(StudentSet studentSet);
 
     static GroupedStudents reduceGroups(GroupedStudents groupedStudents);
+
+    static void addGroupsToRemainder(GroupedStudents& finalGroupedStudents, int numGroups);
+
+    static void addRemainderToRestOfGroup(GroupedStudents& finalGroupedStudents);
 
     static int calculateStudentCompatability(std::list<Student> studentGroup1, std::list<Student> studentGroup2);
 };

@@ -41,14 +41,3 @@ std::string BackendAdaptor::createCsvLineFromStudent(Student s) {
 StudentSet BackendAdaptor::getStudentSet() {
     return studentSet;
 }
-
-GroupedStudents BackendAdaptor::convertStudentSetToGroupedStudents(StudentSet ss) {
-    std::vector<Student> students = ss.getStudentList();
-
-    GroupedStudents gs;
-    for (auto s : students) {
-        gs.addGroup(std::list<Student> { s });
-    }
-
-    return gs;
-}

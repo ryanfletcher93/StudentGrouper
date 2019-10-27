@@ -17,5 +17,5 @@ StudentPreference Student::getStudentPreference() {
 }
 
 bool Student::isStudentInPreference(Student s) {
-    return true;
+    return this->studentPreference->isStudentInPreferences(s);
 }
