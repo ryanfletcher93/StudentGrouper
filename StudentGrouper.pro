@@ -40,6 +40,6 @@ FORMS += \
     mainwindow.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+target.path = C:\\Users\\Ryan\ Fletcher\\Documents\\Programming\ Projects\\Qt\\StudentGrouper\\bin
+# else: unix:!android: target.path = C:\\Users\\Ryan\ Fletcher\\Documents\\Programming\ Projects\\Qt\\StudentGrouper\\bin
 !isEmpty(target.path): INSTALLS += target

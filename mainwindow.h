@@ -18,7 +18,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    const bool testing = true;
+    const bool testing = false;
+
+    const int defaultNumberGroups = 5;
 
     const std::string inputCsvFilePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\setup\\mockCsvInput.csv";
     const std::string exportCsvFilePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\setup\\mockCsvOutput.csv";
@@ -29,6 +31,8 @@ private slots:
     void on_analyseDataButton_clicked();
 
     void on_exportCsvButton_clicked();
+
+    void on_numberGroupsDisplay_textEdited(const QString &arg1);
 
 private:
     Ui::MainWindow *ui;

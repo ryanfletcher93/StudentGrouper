@@ -12,6 +12,8 @@ public:
 
     void setConfigFileAndParse(std::string configFile);
 
+    bool hasValidInputFile();
+
     void writeOutputToFile(std::string filePath, GroupedStudents groupedStudents);
 
     StudentSet getStudentSet();

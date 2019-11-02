@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <QMessageBox>
 
 BackendAdaptor::BackendAdaptor()
 {
@@ -11,10 +12,25 @@ BackendAdaptor::BackendAdaptor()
 void BackendAdaptor::setConfigFileAndParse(std::string configFile) {
     csvParser.setFilePath(configFile);
 
-    this->studentSet = csvParser.parseFile();
+    try {
+        this->studentSet = csvParser.parseFile();
+    }
+    catch (...) {
+        QMessageBox box;
+        box.setText("Invalid input csv, please check and enter again");
+        box.exec();
+    }
+}
+
+bool BackendAdaptor::hasValidInputFile() {
+    return !this->studentSet.isEmpty();
 }
 
 void BackendAdaptor::writeOutputToFile(std::string filePath, GroupedStudents groupedStudents) {
+    if (groupedStudents.isEmpty()) {
+        throw "No output to generate";
+    }
+
     std::string outputLines = "";
     int groupId = 1;
     for (auto studentClass : groupedStudents.getGroupedStudents()) {

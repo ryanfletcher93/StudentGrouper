@@ -11,6 +11,8 @@ class StudentSet
 public:
     StudentSet();
 
+    bool isEmpty();
+
     void addStudent(Student s);
 
     std::pair<bool, Student&> getStudentById(int id);
@@ -18,6 +20,8 @@ public:
     std::vector<Student> getStudentList() {
         return students;
     }
+
+    std::vector<Student> randomize();
 
     //GroupedStudents createOptimalDistribution();
 

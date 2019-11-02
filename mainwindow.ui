@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -85,7 +88,7 @@
    <widget class="QLineEdit" name="happinessScoreDisplay">
     <property name="geometry">
      <rect>
-      <x>182</x>
+      <x>190</x>
       <y>260</y>
       <width>81</width>
       <height>22</height>
@@ -97,8 +100,8 @@
      <rect>
       <x>70</x>
       <y>260</y>
-      <width>101</width>
-      <height>16</height>
+      <width>121</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -106,16 +109,19 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="numberGroupsDisplay">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>210</x>
       <y>180</y>
       <width>81</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string>5</string>
     </property>
    </widget>
    <widget class="QLabel" name="numberGroupsLabel">
@@ -123,12 +129,12 @@
      <rect>
       <x>70</x>
       <y>180</y>
-      <width>101</width>
-      <height>16</height>
+      <width>141</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Number Groups</string>
+     <string>Number of Groups</string>
     </property>
    </widget>
   </widget>
@@ -138,7 +144,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

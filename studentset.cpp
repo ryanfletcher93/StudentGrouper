@@ -1,8 +1,14 @@
 #include "studentset.h"
 
+#include <algorithm>
+
 StudentSet::StudentSet()
 {
 
+}
+
+bool StudentSet::isEmpty() {
+    return students.size() == 0;
 }
 
 void StudentSet::addStudent(Student s) {
@@ -20,4 +26,9 @@ std::pair<bool, Student&> StudentSet::getStudentById(int id) {
     }
 
     return defaultReturn;
+}
+
+std::vector<Student> StudentSet::randomize() {
+    std::random_shuffle(students.begin(), students.end());
+    return this->students;
 }

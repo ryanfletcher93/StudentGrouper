@@ -11,6 +11,10 @@ GroupedStudents::GroupedStudents(StudentSet studentSet) {
     }
 }
 
+bool GroupedStudents::isEmpty() {
+    return this->groupedStudents.size() == 0;
+}
+
 std::list<std::list<Student>> GroupedStudents::getGroupedStudents() {
     return this->groupedStudents;
 }

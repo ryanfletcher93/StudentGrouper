@@ -21,6 +21,8 @@ public:
     GroupedStudents();
     GroupedStudents(StudentSet studentSet);
 
+    bool isEmpty();
+
     std::list<std::list<Student>> getGroupedStudents();
 
     int calculateHappinessScore();

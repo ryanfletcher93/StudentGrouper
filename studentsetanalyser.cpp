@@ -89,10 +89,12 @@ void StudentSetAnalyser::addRemainderToRestOfGroup(GroupedStudents& gs) {
     int maxGroupSize = existingGroupSize + additionalStudents;
 
     // For each student in remainder, add to most viable group
+    int numRemainders = 0;
     for (auto remainderIt = gs.beginRemainder(); remainderIt != gs.endRemainder(); remainderIt++) {
-        int bestGroupCompatibility = 0;
+        numRemainders++;
+        int bestGroupCompatibility = -1;
         std::list<std::list<Student>>::iterator it;
-        for (auto groupIt = gs.begin(); groupIt != gs.end(); groupIt++) {
+        for (auto groupIt = gs.begin(); groupIt != gs.end();) {
             // Check if group is not fully allocated
             if (static_cast<int> ((*groupIt).size()) < maxGroupSize) {
                 int groupCompatability = calculateStudentCompatability(std::list<Student> {*remainderIt}, *groupIt);
@@ -101,6 +103,8 @@ void StudentSetAnalyser::addRemainderToRestOfGroup(GroupedStudents& gs) {
                     it = groupIt;
                 }
             }
+
+            groupIt++;
         }
 
         // Add remainder Student to best group
