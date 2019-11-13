@@ -14,9 +14,10 @@ class Node : public QGraphicsItem
 {
 public:
     Node() {}
-    Node(GroupVisualiser *visualiser);
+    Node(GroupVisualiser *visualiser, Student s);
 
-    //Node(const Node &rhs);
+    void addEdge(Edge *edge);
+    QList<Edge *> edges() const;
 
     QRectF boundingRect() const override;
 
@@ -28,6 +29,7 @@ private:
     QList<Edge *> edgeList;
     QPointF newPos;
     GroupVisualiser *visualiser;
+    Student student;
 };
 
 #endif // NODE_H

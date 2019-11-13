@@ -70,6 +70,8 @@ void MainWindow::on_analyseDataButton_clicked()
     int happinessScore = groupedStudents.calculateHappinessScore();
     QString happinessScoreString = QString::number(happinessScore);
     ui->happinessScoreDisplay->setText(happinessScoreString);
+
+    delete grouper;
 }
 
 void MainWindow::on_exportCsvButton_clicked()
@@ -110,5 +112,7 @@ void MainWindow::on_numberGroupsDisplay_textEdited(const QString &textValue)
 void MainWindow::on_viewResults_clicked()
 {
     GroupVisualiser *wdg = new GroupVisualiser();
+    wdg->setGroupedStudents(this->groupedStudents);
+    wdg->setNodePositions();
     wdg->show();
 }

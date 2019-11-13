@@ -1,9 +1,15 @@
 #include "groupvisualiser.h"
 
+#include <math.h>
+
+#define RADIUS 200
+#define DEG_CIRCLE 360
+#define PI 3.14159265
+
 GroupVisualiser::GroupVisualiser(QWidget* parent) :
     QGraphicsView(parent)
 {
-    QGraphicsScene *scene = new QGraphicsScene(this);
+    scene = new QGraphicsScene(this);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     scene->setSceneRect(-200, -200, 400, 400);
     setScene(scene);
@@ -13,38 +19,49 @@ GroupVisualiser::GroupVisualiser(QWidget* parent) :
     setTransformationAnchor(AnchorUnderMouse);
     scale(qreal(0.8), qreal(0.8));
     setMinimumSize(400, 400);
-    setWindowTitle(tr("Elastic Nodes"));
-
-    Node *node1 = new Node(this);
-    Node *node2 = new Node(this);
-    Node *node3 = new Node(this);
-    Node *node4 = new Node(this);
-    centreNode = new Node(this);
-    Node *node6 = new Node(this);
-    Node *node7 = new Node(this);
-    Node *node8 = new Node(this);
-    Node *node9 = new Node(this);
-    scene->addItem(node1);
-    scene->addItem(node2);
-    scene->addItem(node3);
-    scene->addItem(node4);
-    scene->addItem(centreNode);
-    scene->addItem(node6);
-    scene->addItem(node7);
-    scene->addItem(node8);
-    scene->addItem(node9);
-
-    node1->setPos(-50, -50);
-    node2->setPos(0, -50);
-    node3->setPos(50, -50);
-    node4->setPos(-50, 0);
-    centreNode->setPos(0, 0);
-    node6->setPos(50, 0);
-    node7->setPos(-50, 50);
-    node8->setPos(0, 50);
-    node9->setPos(50, 50);
+    setWindowTitle(tr("Grouped Students"));
 }
 
+void GroupVisualiser::setGroupedStudents(GroupedStudents groupedStudents) {
+    this->groupedStudents = groupedStudents;
+}
+
+void GroupVisualiser::setNodePositions() {
+    // If nothing in
+    if (groupedStudents.begin() == groupedStudents.end()) {
+        return;
+    }
+
+    std::list<Student> group = *(groupedStudents.begin());
+
+    int numNodes = static_cast<int>(group.size());
+    double nodeAngleDeg = DEG_CIRCLE / numNodes;
+
+    int nodeCount=0;
+    for (auto it = group.begin(); it != group.end(); it++) {
+        Node *n = new Node(this, *it);
+
+        // Get the node position using angles in radians
+        double xPos, yPos;
+        xPos = RADIUS * cos(nodeCount * nodeAngleDeg * PI / 180);
+        yPos = RADIUS * sin(nodeCount * nodeAngleDeg * PI / 180);
+
+        n->setPos(xPos, yPos);
+
+        nodes.push_back(n);
+        scene->addItem(n);
+        //setNodePositions();
+
+        // As long as not last in list, add edge
+        if (nodeCount != 0) {
+            scene->addItem(new Edge(nodes[nodeCount], nodes[nodeCount-1]));
+        }
+
+        nodeCount++;
+    }
+}
+
+/*
 void GroupVisualiser::drawBackground(QPainter *painter, const QRectF &rect)
 {
     Q_UNUSED(rect);
@@ -81,3 +98,4 @@ void GroupVisualiser::drawBackground(QPainter *painter, const QRectF &rect)
     painter->setPen(Qt::black);
     painter->drawText(textRect, message);
 }
+*/

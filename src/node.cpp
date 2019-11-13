@@ -1,7 +1,7 @@
 #include "node.h"
 
-Node::Node(GroupVisualiser *visualiser) :
-    visualiser(visualiser)
+Node::Node(GroupVisualiser *visualiser, Student student) :
+    visualiser(visualiser), student(student)
 {
     setZValue(-1);
 }
@@ -15,6 +15,17 @@ QPainterPath Node::shape() const {
     QPainterPath path;
     path.addEllipse(-10, -10, 20, 20);
     return path;
+}
+
+void Node::addEdge(Edge *edge)
+{
+    edgeList.push_back(edge);
+    edge->adjust();
+}
+
+QList<Edge *> Node::edges() const
+{
+    return edgeList;
 }
 
 void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
@@ -37,6 +48,9 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     //}
     painter->setBrush(gradient);
 
+    QString studentName = QString::fromStdString(student.getFirstName() + " " + student.getFamilyName());
+
     painter->setPen(QPen(Qt::black, 0));
     painter->drawEllipse(-10, -10, 20, 20);
+    painter->drawText(0,0,studentName);
 }

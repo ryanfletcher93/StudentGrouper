@@ -3,6 +3,7 @@
 
 class GroupVisualiser;
 
+#include "groupedstudents.h"
 #include "node.h"
 
 #include <QGraphicsView>
@@ -15,6 +16,10 @@ class GroupVisualiser : public QGraphicsView
 
 public:
     GroupVisualiser(QWidget *parent = 0);
+
+    void setGroupedStudents(GroupedStudents groupedStudents);
+
+    void setNodePositions();
 
     /*
 
@@ -35,10 +40,13 @@ protected:
 
     */
 
-    void drawBackground(QPainter *painter, const QRectF &rect) override;
+    //void drawBackground(QPainter *painter, const QRectF &rect) override;
 
 private:
-    Node *centreNode;
+    std::vector<Node *> nodes;
+    GroupedStudents groupedStudents;
+
+    QGraphicsScene *scene;
 };
 
 #endif // GROUPVISUALISER_H
