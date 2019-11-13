@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     backendadaptor.cpp \
     basegrouper.cpp \
+    bidirectionaledge.cpp \
     csvparser.cpp \
     edge.cpp \
     groupedstudents.cpp \
@@ -29,10 +30,12 @@ SOURCES += \
     student.cpp \
     studentpreference.cpp \
     studentset.cpp \
+    unidirectionaledge.cpp
 
 HEADERS += \
     backendadaptor.h \
     basegrouper.h \
+    bidirectionaledge.h \
     csvparser.h \
     edge.h \
     groupedstudents.h \
@@ -42,7 +45,8 @@ HEADERS += \
     node.h \
     student.h \
     studentpreference.h \
-    studentset.h
+    studentset.h \
+    unidirectionaledge.h
 
 FORMS += \
     mainwindow.ui

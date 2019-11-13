@@ -47,6 +47,8 @@ private:
     GroupedStudents groupedStudents;
 
     QGraphicsScene *scene;
+
+    void drawNodeEdges(Node *node);
 };
 
 #endif // GROUPVISUALISER_H

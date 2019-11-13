@@ -24,11 +24,9 @@ public:
 
 protected:
     QRectF boundingRect() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override = 0;
 
-private:
     Node *source, *dest;
-
     QPointF sourcePoint;
     QPointF destPoint;
     qreal arrowSize;

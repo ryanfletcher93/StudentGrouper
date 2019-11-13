@@ -59,8 +59,6 @@ void MainWindow::on_analyseDataButton_clicked()
 
     int numGroups = ui->numberGroupsDisplay->text().toInt();
 
-    //this->groupedStudents = StudentSetAnalyser::groupStudents(ss, numGroups);
-
     BaseGrouper *grouper = new ImperfectMergeGrouper();
     grouper->setStudentSet(ss);
     grouper->setNumberGroups(numGroups);

@@ -25,6 +25,10 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *) override;
 
+    Student getStudent() {
+        return student;
+    }
+
 private:
     QList<Edge *> edgeList;
     QPointF newPos;

@@ -1,8 +1,10 @@
+#include "bidirectionaledge.h"
 #include "groupvisualiser.h"
+#include "unidirectionaledge.h"
 
 #include <math.h>
 
-#define RADIUS 200
+#define RADIUS 500
 #define DEG_CIRCLE 360
 #define PI 3.14159265
 
@@ -18,7 +20,7 @@ GroupVisualiser::GroupVisualiser(QWidget* parent) :
     setRenderHint(QPainter::Antialiasing);
     setTransformationAnchor(AnchorUnderMouse);
     scale(qreal(0.8), qreal(0.8));
-    setMinimumSize(400, 400);
+    setMinimumSize(1000, 900);
     setWindowTitle(tr("Grouped Students"));
 }
 
@@ -50,14 +52,27 @@ void GroupVisualiser::setNodePositions() {
 
         nodes.push_back(n);
         scene->addItem(n);
-        //setNodePositions();
 
-        // As long as not last in list, add edge
-        if (nodeCount != 0) {
-            scene->addItem(new Edge(nodes[nodeCount], nodes[nodeCount-1]));
-        }
+        drawNodeEdges(n);
 
         nodeCount++;
+    }
+}
+
+void GroupVisualiser::drawNodeEdges(Node *n) {
+    Student s1 = n->getStudent();
+
+    for (auto node : nodes) {
+        Student s2 = node->getStudent();
+        if (s1.isStudentInPreference(s2) && s2.isStudentInPreference(s1)) {
+            scene->addItem(new BidirectionalEdge(n, node));
+        }
+        else if (s1.isStudentInPreference(s2)) {
+            scene->addItem(new UnidirectionalEdge(n, node));
+        }
+        else if (s2.isStudentInPreference(s1)) {
+            scene->addItem(new UnidirectionalEdge(node, n));
+        }
     }
 }
 
