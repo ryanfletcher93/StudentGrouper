@@ -17,24 +17,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     backendadaptor.cpp \
+    basegrouper.cpp \
     csvparser.cpp \
+    edge.cpp \
     groupedstudents.cpp \
+    groupvisualiser.cpp \
+    imperfectmergegrouper.cpp \
     main.cpp \
     mainwindow.cpp \
+    node.cpp \
     student.cpp \
     studentpreference.cpp \
     studentset.cpp \
-    studentsetanalyser.cpp \
 
 HEADERS += \
     backendadaptor.h \
+    basegrouper.h \
     csvparser.h \
+    edge.h \
     groupedstudents.h \
+    groupvisualiser.h \
+    imperfectmergegrouper.h \
     mainwindow.h \
+    node.h \
     student.h \
     studentpreference.h \
-    studentset.h \
-    studentsetanalyser.h
+    studentset.h
 
 FORMS += \
     mainwindow.ui

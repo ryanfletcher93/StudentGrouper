@@ -1,7 +1,10 @@
+#include "groupvisualiser.h"
+#include "imperfectmergegrouper.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include <QFileDialog>
+#include <QGraphicsView>
 #include <QMessageBox>
 #include <QString>
 
@@ -55,7 +58,14 @@ void MainWindow::on_analyseDataButton_clicked()
     ss.randomize();
 
     int numGroups = ui->numberGroupsDisplay->text().toInt();
-    this->groupedStudents = StudentSetAnalyser::groupStudents(ss, numGroups);
+
+    //this->groupedStudents = StudentSetAnalyser::groupStudents(ss, numGroups);
+
+    BaseGrouper *grouper = new ImperfectMergeGrouper();
+    grouper->setStudentSet(ss);
+    grouper->setNumberGroups(numGroups);
+
+    this->groupedStudents = grouper->groupStudents();
 
     int happinessScore = groupedStudents.calculateHappinessScore();
     QString happinessScoreString = QString::number(happinessScore);
@@ -95,4 +105,10 @@ void MainWindow::on_numberGroupsDisplay_textEdited(const QString &textValue)
         box.show();
         this->ui->numberGroupsDisplay->setText(QString(this->defaultNumberGroups));
     }
+}
+
+void MainWindow::on_viewResults_clicked()
+{
+    GroupVisualiser *wdg = new GroupVisualiser();
+    wdg->show();
 }

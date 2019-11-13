@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include "backendadaptor.h"
-#include "studentsetanalyser.h"
 
 #include <QMainWindow>
 
@@ -33,6 +32,8 @@ private slots:
     void on_exportCsvButton_clicked();
 
     void on_numberGroupsDisplay_textEdited(const QString &arg1);
+
+    void on_viewResults_clicked();
 
 private:
     Ui::MainWindow *ui;
