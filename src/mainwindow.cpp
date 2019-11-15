@@ -69,7 +69,14 @@ void MainWindow::on_analyseDataButton_clicked()
     grouper->setStudentSet(ss);
     grouper->setNumberGroups(numGroups);
 
-    this->groupedStudents = grouper->groupStudents();
+    try {
+        this->groupedStudents = grouper->groupStudents();
+    }
+    catch (...) {
+        QMessageBox box;
+        box.setText("Error when grouping students.");
+        box.exec();
+    }
 
     int happinessScore = groupedStudents.calculateHappinessScore();
     QString happinessScoreString = QString::number(happinessScore);

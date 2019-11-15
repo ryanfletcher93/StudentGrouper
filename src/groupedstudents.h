@@ -48,6 +48,16 @@ public:
     }
 
     /**
+     * @brief getRemainder
+     * Get the remainder students as a list
+     *
+     * @return
+     */
+    std::list<Student> getRemainder() {
+        return remainderStudents;
+    }
+
+    /**
      * @brief size
      * Return the number of groups
      *

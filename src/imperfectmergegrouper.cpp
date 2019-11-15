@@ -21,7 +21,6 @@ GroupedStudents ImperfectMergeGrouper::groupStudents() {
 }
 
 GroupedStudents ImperfectMergeGrouper::reduceGroups(GroupedStudents groupedStudents) {
-    //GroupedStudents groupedStudents = finalGroupedStudents;
     // Store new groups to return
     GroupedStudents reducedGroupedStudents;
     // Perform one halving of student spaces
@@ -30,8 +29,7 @@ GroupedStudents ImperfectMergeGrouper::reduceGroups(GroupedStudents groupedStude
         std::vector<std::list<std::list<Student>>::iterator> mostCompatibleSecondStudent;
 
         auto studentIt1 = groupedStudents.begin();
-        std::list<std::list<Student>>::iterator studentIt2;
-        for (studentIt2 = std::next(groupedStudents.begin(),1); studentIt2 != groupedStudents.end(); studentIt2++) {
+        for (auto studentIt2 = std::next(groupedStudents.begin(),1); studentIt2 != groupedStudents.end(); studentIt2++) {
             int tempStudentGroupCompatability =
                     calculateStudentCompatability(*studentIt1, *studentIt2);
 
@@ -62,6 +60,7 @@ GroupedStudents ImperfectMergeGrouper::reduceGroups(GroupedStudents groupedStude
         groupedStudents.erase(mostCompatibleSecondStudent.at(0));
     }
 
+    reducedGroupedStudents.addToRemainder(groupedStudents.getRemainder());
     if (groupedStudents.size() == 1) {
         reducedGroupedStudents.addToRemainder(*groupedStudents.begin());
     }
@@ -83,17 +82,19 @@ void ImperfectMergeGrouper::addGroupsToRemainder() {
 
 void ImperfectMergeGrouper::addRemainderToRestOfGroup() {
     // Loop through each student in remainder and assign to best group evenly
-    int existingGroupSize = static_cast<int> ((*finalGroupedStudents.begin()).size());
+    int currGroupSize = static_cast<int> ((*finalGroupedStudents.begin()).size());
     int numberGroups = static_cast<int> (finalGroupedStudents.size());
     int remainderSize = static_cast<int> (finalGroupedStudents.sizeRemainder());
-    int additionalStudents = static_cast<int> (ceil(remainderSize / numberGroups));
-    int maxGroupSize = existingGroupSize + additionalStudents;
+    double ceilAdditionalStudents = ceil(static_cast<double> (remainderSize) / static_cast<double> (numberGroups));
+    int additionalStudents = static_cast<int>(ceilAdditionalStudents);
+    int maxGroupSize = currGroupSize + additionalStudents;
 
     // For each student in remainder, add to most viable group
     int numRemainders = 0;
     for (auto remainderIt = finalGroupedStudents.beginRemainder(); remainderIt != finalGroupedStudents.endRemainder(); remainderIt++) {
         numRemainders++;
         int bestGroupCompatibility = -1;
+
         std::list<std::list<Student>>::iterator it;
         for (auto groupIt = finalGroupedStudents.begin(); groupIt != finalGroupedStudents.end();) {
             // Check if group is not fully allocated
