@@ -1,5 +1,9 @@
 #include "node.h"
 
+#define TEXT_WIDTH 100
+#define TEXT_HEIGHT 20
+#define TEXT_OFFSET 20
+
 Node::Node(GroupVisualiser *visualiser, Student student) :
     visualiser(visualiser), student(student)
 {
@@ -35,22 +39,31 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawEllipse(-7, -7, 20, 20);
 
     QRadialGradient gradient(-3, -3, 10);
-    /*
-    if (option->state & QStyle::State_Sunken) {
-        gradient.setCenter(3, 3);
-        gradient.setFocalPoint(3, 3);
-        gradient.setColorAt(1, QColor(Qt::yellow).lighter(120));
-        gradient.setColorAt(0, QColor(Qt::darkYellow).lighter(120));
-    } else {
-    */
-        gradient.setColorAt(0, Qt::yellow);
-        gradient.setColorAt(1, Qt::darkYellow);
-    //}
+    gradient.setColorAt(0, Qt::yellow);
+    gradient.setColorAt(1, Qt::yellow);
     painter->setBrush(gradient);
 
     QString studentName = QString::fromStdString(student.getFirstName() + " " + student.getFamilyName());
 
     painter->setPen(QPen(Qt::black, 0));
     painter->drawEllipse(-10, -10, 20, 20);
-    painter->drawText(0,0,studentName);
+
+    int textX;
+    int textY;
+    int flag;
+    if (cos(angle) > 0) {
+        textX = TEXT_OFFSET * cos(angle);
+        flag = Qt::AlignLeft;
+    } else {
+        textX = TEXT_OFFSET * cos(angle) - TEXT_WIDTH;
+        flag = Qt::AlignRight;
+    }
+
+    if (sin(angle) > 0) {
+        textY = TEXT_OFFSET * sin(angle);
+    } else {
+        textY = TEXT_OFFSET * sin(angle) - TEXT_HEIGHT;
+    }
+
+    painter->drawText(textX, textY, TEXT_WIDTH, TEXT_HEIGHT, flag, studentName);
 }

@@ -73,7 +73,7 @@ void CsvParser::addStudentPreferences(std::vector<std::string> csvContents, std:
             throw "Invalid tokenised csv line length";
         }
 
-        int currStudentId = std::stoi(tokenisedLine.at(3));
+        int currStudentId = std::stoi(tokenisedLine.at(0));
 
         std::pair<bool, Student&> currStudentPair = studentSet->getStudentById(currStudentId);
         Student &student = currStudentPair.second;
@@ -115,10 +115,10 @@ Student CsvParser::getStudentFromCsvFile(std::string line) {
     }
 
     std::string givenName, middleName, familyName, idStr;
-    givenName = tokenisedLine[0];
-    middleName = tokenisedLine[1];
-    familyName = tokenisedLine[2];
-    idStr = tokenisedLine[3];
+    idStr = tokenisedLine[0];
+    givenName = tokenisedLine[1];
+    middleName = tokenisedLine[2];
+    familyName = tokenisedLine[3];
 
     int id = std::stoi(idStr);
 

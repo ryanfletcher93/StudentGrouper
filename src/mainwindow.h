@@ -19,8 +19,10 @@ public:
 
     const bool testing = false;
 
+    /// TODO: Move to BackendAdaptor
     const int defaultNumberGroups = 5;
 
+    /// Debug file paths used for testing
     const std::string inputCsvFilePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\setup\\mockCsvInput.csv";
     const std::string exportCsvFilePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\setup\\mockCsvOutput.csv";
 
@@ -31,15 +33,16 @@ private slots:
 
     void on_exportCsvButton_clicked();
 
-    void on_numberGroupsDisplay_textEdited(const QString &arg1);
-
     void on_viewResults_clicked();
+
+    void on_numGroupsSpinBox_valueChanged(int arg1);
+
+    void on_selectGroupedStudentCsvButton_clicked();
 
 private:
     Ui::MainWindow *ui;
 
     BackendAdaptor bea;
-
     GroupedStudents groupedStudents;
 };
 #endif // MAINWINDOW_H

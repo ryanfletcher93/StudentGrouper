@@ -21,6 +21,7 @@ SOURCES += \
     bidirectionaledge.cpp \
     csvparser.cpp \
     edge.cpp \
+    groupedcsvparser.cpp \
     groupedstudents.cpp \
     groupvisualiser.cpp \
     imperfectmergegrouper.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     bidirectionaledge.h \
     csvparser.h \
     edge.h \
+    groupedcsvparser.h \
     groupedstudents.h \
     groupvisualiser.h \
     imperfectmergegrouper.h \

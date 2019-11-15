@@ -9,7 +9,7 @@ BackendAdaptor::BackendAdaptor()
 
 }
 
-void BackendAdaptor::setConfigFileAndParse(std::string configFile) {
+void BackendAdaptor::parseConfigFile(std::string configFile) {
     csvParser.setFilePath(configFile);
 
     try {
@@ -22,7 +22,22 @@ void BackendAdaptor::setConfigFileAndParse(std::string configFile) {
     }
 }
 
-bool BackendAdaptor::hasValidInputFile() {
+GroupedStudents BackendAdaptor::parseGroupedConfigFile(std::string configFile) {
+    groupedCsvParser.setFilePath(configFile);
+
+    try {
+        this->groupedStudents = groupedCsvParser.parseGroupedFile();
+    }
+    catch (...) {
+        QMessageBox box;
+        box.setText("Invalid input csv, please check and enter again");
+        box.exec();
+    }
+
+    return this->groupedStudents;
+}
+
+bool BackendAdaptor::hasValidUngroupedInputFile() {
     return !this->studentSet.isEmpty();
 }
 
@@ -33,8 +48,8 @@ void BackendAdaptor::writeOutputToFile(std::string filePath, GroupedStudents gro
 
     std::string outputLines = "";
     int groupId = 1;
-    for (auto studentClass : groupedStudents.getGroupedStudents()) {
-        for (Student s : studentClass) {
+    for (auto groupIt = groupedStudents.begin(); groupIt != groupedStudents.end(); groupIt++) {
+        for (Student s : *groupIt) {
             outputLines += std::to_string(groupId) + "," + createCsvLineFromStudent(s) + "\n";
         }
         groupId++;
@@ -48,8 +63,13 @@ void BackendAdaptor::writeOutputToFile(std::string filePath, GroupedStudents gro
 
 std::string BackendAdaptor::createCsvLineFromStudent(Student s) {
     std::string studentString = "";
+
     studentString += std::to_string(s.getStudentId()) + "," + s.getFirstName() +
             "," + s.getMiddleName() + "," + s.getFamilyName();
+
+    for (int preferenceId : s.getStudentPreference().getPreferencesIds()) {
+        studentString += "," + std::to_string(preferenceId);
+    }
 
     return studentString;
 }

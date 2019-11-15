@@ -13,6 +13,14 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->viewResultsGroupComboBox->addItem("1");
+    ui->viewResultsGroupComboBox->addItem("2");
+    ui->viewResultsGroupComboBox->addItem("3");
+    ui->viewResultsGroupComboBox->addItem("4");
+    ui->viewResultsGroupComboBox->addItem("5");
+
+    ui->numGroupsSpinBox->setValue(defaultNumberGroups);
 }
 
 MainWindow::~MainWindow()
@@ -31,11 +39,9 @@ void MainWindow::on_selectStudentCsvButton_clicked()
             tr("Open Csv"), "", tr("*.csv"));
     }
 
-    ui->csvFilePathDisplay->setText(fileName);
-
-
     try {
-        bea.setConfigFileAndParse(fileName.toStdString());
+        bea.parseConfigFile(fileName.toStdString());
+        ui->csvFilePathDisplay->setText(fileName);
     }
     catch (...) {
         QMessageBox box;
@@ -46,7 +52,7 @@ void MainWindow::on_selectStudentCsvButton_clicked()
 
 void MainWindow::on_analyseDataButton_clicked()
 {
-    if (!bea.hasValidInputFile()) {
+    if (!bea.hasValidUngroupedInputFile()) {
         QMessageBox box;
         box.setText("No input csv chosen, please select input csv first");
         box.exec();
@@ -57,7 +63,7 @@ void MainWindow::on_analyseDataButton_clicked()
     StudentSet ss = bea.getStudentSet();
     ss.randomize();
 
-    int numGroups = ui->numberGroupsDisplay->text().toInt();
+    int numGroups = ui->numGroupsSpinBox->value();
 
     BaseGrouper *grouper = new ImperfectMergeGrouper();
     grouper->setStudentSet(ss);
@@ -95,22 +101,57 @@ void MainWindow::on_exportCsvButton_clicked()
     }
 }
 
-void MainWindow::on_numberGroupsDisplay_textEdited(const QString &textValue)
-{
-    bool isValid;
-    int parsedValue = textValue.toInt(&isValid);
-    if (!isValid || parsedValue <= 0 || parsedValue >= 50) {
-        QMessageBox box;
-        box.setText("Invalid group, please enter again");
-        box.show();
-        this->ui->numberGroupsDisplay->setText(QString(this->defaultNumberGroups));
-    }
-}
-
 void MainWindow::on_viewResults_clicked()
 {
     GroupVisualiser *wdg = new GroupVisualiser();
-    wdg->setGroupedStudents(this->groupedStudents);
+
+    int comboBoxIndex = ui->viewResultsGroupComboBox->currentIndex();
+
+    int itIndex = 0;
+    std::list<Student> studentGroup;
+    for (auto it = groupedStudents.begin(); it != groupedStudents.end(); it++) {
+        if (itIndex == comboBoxIndex) {
+            studentGroup = *it;
+        }
+
+        itIndex++;
+    }
+
+    wdg->setStudentGroup(studentGroup);
     wdg->setNodePositions();
+    std::string groupLabel = "Group " + ui->viewResultsGroupComboBox->currentText().toStdString();
+    wdg->setGroupIdentifier(groupLabel);
     wdg->show();
+}
+
+void MainWindow::on_numGroupsSpinBox_valueChanged(int value)
+{
+    if (value <= 0 || value >= 50) {
+        QMessageBox box;
+        box.setText("Invalid group, please enter again");
+        box.exec();
+        this->ui->numGroupsSpinBox->setValue(defaultNumberGroups);
+    }
+}
+
+void MainWindow::on_selectGroupedStudentCsvButton_clicked()
+{
+    QString fileName;
+    if (testing) {
+        fileName = QString::fromStdString(inputCsvFilePath);
+    }
+    else {
+        fileName = QFileDialog::getOpenFileName(this,
+            tr("Open Csv"), "", tr("*.csv"));
+    }
+
+    try {
+        this->groupedStudents = bea.parseGroupedConfigFile(fileName.toStdString());
+        ui->csvFilePathDisplay_2->setText(fileName);
+    }
+    catch (...) {
+        QMessageBox box;
+        box.setText("Invalid input csv, please check and enter again");
+        box.exec();
+    }
 }
