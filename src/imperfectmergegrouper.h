@@ -3,7 +3,7 @@
 
 #include "groupedstudents.h"
 
-#include <basegrouper.h>
+#include "basegrouper.h"
 
 /**
  * @brief The ImperfectMergeGrouper class
@@ -52,13 +52,12 @@ private:
      * @brief calculateStudentCompatability
      * Calculate how compatible the student groups
      * TODO: Find a better place for this (i.e. not static)
-     * TODO: Create student group instead of raw std::list<Student>
      *
      * @param studentGroup1
      * @param studentGroup2
      * @return
      */
-    static int calculateStudentCompatability(std::list<Student> studentGroup1, std::list<Student> studentGroup2);
+    static int calculateStudentCompatability(StudentGroup studentGroup1, StudentGroup studentGroup2);
 };
 
 #endif // IMPERFECTMERGEGROUPER_H

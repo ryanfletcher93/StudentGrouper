@@ -1,5 +1,5 @@
-#include "bidirectionaledge.h"
 #include "groupvisualiser.h"
+#include "bidirectionaledge.h"
 #include "unidirectionaledge.h"
 
 #include <math.h>
@@ -24,7 +24,7 @@ GroupVisualiser::GroupVisualiser(QWidget* parent) :
     setWindowTitle(tr("Grouped Students"));
 }
 
-void GroupVisualiser::setStudentGroup(std::list<Student> studentGroup) {
+void GroupVisualiser::setStudentGroup(StudentGroup studentGroup) {
     this->studentGroup = studentGroup;
 }
 

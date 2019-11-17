@@ -2,6 +2,7 @@
 #define GROUPEDSTUDENTS_H
 
 #include "student.h"
+#include "studentgroup.h"
 #include "studentset.h"
 
 #include <list>
@@ -19,12 +20,7 @@ class GroupedStudents
 {
 public:
     /// Define iterators for the groups
-    typedef std::list<std::list<Student>>::iterator iterator;
-    typedef std::list<std::list<Student>>::const_iterator const_iterator;
-
-    /// Define iterators for the remainder groups
-    typedef std::list<Student>::iterator remainderIterator;
-    typedef std::list<Student>::const_iterator const_remainderIterator;
+    typedef std::list<StudentGroup>::iterator iterator;
 
     GroupedStudents();
     GroupedStudents(StudentSet studentSet);
@@ -53,7 +49,7 @@ public:
      *
      * @return
      */
-    std::list<Student> getRemainder() {
+    StudentGroup getRemainder() {
         return remainderStudents;
     }
 
@@ -83,15 +79,15 @@ public:
      *
      * @param studentList
      */
-    void addGroup(std::list<Student> studentList) {
+    void addGroup(StudentGroup studentList) {
         groupedStudents.push_back(studentList);
     }
 
     /// Setup remainder iterators
-    remainderIterator beginRemainder() {
+    StudentGroup::iterator beginRemainder() {
         return remainderStudents.begin();
     }
-    remainderIterator endRemainder() {
+    StudentGroup::iterator endRemainder() {
         return remainderStudents.end();
     }
 
@@ -105,7 +101,7 @@ public:
         return remainderStudents.size();
     }
 
-    void eraseRemainder(remainderIterator remainderIt) {
+    void eraseRemainder(StudentGroup::iterator remainderIt) {
         remainderStudents.erase(remainderIt);
     }
 
@@ -114,7 +110,7 @@ public:
      * Remove all remaining iterators
      */
     void eraseAllRemainders() {
-        remainderStudents.clear();
+        remainderStudents.eraseAll();
     }
 
     /**
@@ -123,15 +119,15 @@ public:
      *
      * @param studentList
      */
-    void addToRemainder(std::list<Student> studentList) {
+    void addToRemainder(StudentGroup studentList) {
         for (auto s : studentList) {
-            remainderStudents.push_back(s);
+            remainderStudents.addStudent(s);
         }
     }
 
 private:
-    std::list<std::list<Student>> groupedStudents;
-    std::list<Student> remainderStudents;
+    std::list<StudentGroup> groupedStudents;
+    StudentGroup remainderStudents;
 };
 
 #endif // GROUPEDSTUDENTS_H

@@ -19,7 +19,6 @@ public:
 
     const bool testing = false;
 
-    /// TODO: Move to BackendAdaptor
     const int defaultNumberGroups = 5;
 
     /// Debug file paths used for testing
@@ -38,6 +37,8 @@ private slots:
     void on_numGroupsSpinBox_valueChanged(int arg1);
 
     void on_selectGroupedStudentCsvButton_clicked();
+
+    void updateViewGroupOptions();
 
 private:
     Ui::MainWindow *ui;

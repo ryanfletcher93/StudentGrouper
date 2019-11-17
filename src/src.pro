@@ -1,4 +1,4 @@
-QT       += core gui
+QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,6 +29,7 @@ SOURCES += \
     mainwindow.cpp \
     node.cpp \
     student.cpp \
+    studentgroup.cpp \
     studentpreference.cpp \
     studentset.cpp \
     unidirectionaledge.cpp
@@ -46,6 +47,7 @@ HEADERS += \
     mainwindow.h \
     node.h \
     student.h \
+    studentgroup.h \
     studentpreference.h \
     studentset.h \
     unidirectionaledge.h

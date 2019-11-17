@@ -6,18 +6,12 @@ This program is used to enter a list of students and their preference for other 
 --------
 Running
 --------
-To run this program, enter a file in the corresponding format:
-- CSV one line for each students
-- First column, student first name
-- Second column, student middle name
-- Third column, student family name
-- Fourth column, student unique id numbered
-- Fifth to tenth column, the 6 student ids of their preferences in any order
-
-For examples of this see the setup folder of the root. It also contains a very simple python code to create a new list of people.
+For a use guide, see "How to use StudentGrouper.docx"
 
 ----------
 TODO List:
 ----------
-- Fix program crashing on certain  strange numbered groups (e.g. 7)
-- Fix wrong output for group of 1
+- Move some of the display and backend adaptor logic to make more sense
+- Create some more thorough unit tests (and if needed refactor the code)
+- Include ability to click and drag nodes
+- Include ability to highlight/filter nodes and edges

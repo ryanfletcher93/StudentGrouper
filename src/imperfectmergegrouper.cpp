@@ -26,14 +26,14 @@ GroupedStudents ImperfectMergeGrouper::reduceGroups(GroupedStudents groupedStude
     // Perform one halving of student spaces
     while (!(groupedStudents.size() == 0 || groupedStudents.size() == 1)) {
         int maxStudentGroupCompatability = 0;
-        std::vector<std::list<std::list<Student>>::iterator> mostCompatibleSecondStudent;
+        std::vector<GroupedStudents::iterator> mostCompatibleSecondStudent;
 
         auto studentIt1 = groupedStudents.begin();
         for (auto studentIt2 = std::next(groupedStudents.begin(),1); studentIt2 != groupedStudents.end(); studentIt2++) {
             int tempStudentGroupCompatability =
                     calculateStudentCompatability(*studentIt1, *studentIt2);
 
-            std::list<std::list<Student>>::iterator tempIt2 = studentIt2;
+            GroupedStudents::iterator tempIt2 = studentIt2;
             // Create list of most compatible groups, if compatability higher then clear and add
             if (tempStudentGroupCompatability > maxStudentGroupCompatability) {
                 mostCompatibleSecondStudent.clear();
@@ -46,10 +46,10 @@ GroupedStudents ImperfectMergeGrouper::reduceGroups(GroupedStudents groupedStude
         }
 
         // Decide on what pair to group
-        std::list<Student> secondGroup = *(mostCompatibleSecondStudent.at(0));
+        StudentGroup secondGroup = *(mostCompatibleSecondStudent.at(0));
 
         // Combine groups
-        std::list<Student> combinedGroups;
+        StudentGroup combinedGroups;
         combinedGroups.insert(combinedGroups.end(), groupedStudents.begin()->begin(), groupedStudents.begin()->end());
         combinedGroups.insert(combinedGroups.end(), secondGroup.begin(), secondGroup.end());
 
@@ -95,11 +95,11 @@ void ImperfectMergeGrouper::addRemainderToRestOfGroup() {
         numRemainders++;
         int bestGroupCompatibility = -1;
 
-        std::list<std::list<Student>>::iterator it;
+        GroupedStudents::iterator it;
         for (auto groupIt = finalGroupedStudents.begin(); groupIt != finalGroupedStudents.end();) {
             // Check if group is not fully allocated
             if (static_cast<int> ((*groupIt).size()) < maxGroupSize) {
-                int groupCompatability = calculateStudentCompatability(std::list<Student> {*remainderIt}, *groupIt);
+                int groupCompatability = calculateStudentCompatability(StudentGroup(*remainderIt), *groupIt);
                 if (groupCompatability > bestGroupCompatibility) {
                     bestGroupCompatibility = groupCompatability;
                     it = groupIt;
@@ -110,14 +110,14 @@ void ImperfectMergeGrouper::addRemainderToRestOfGroup() {
         }
 
         // Add remainder Student to best group
-        (*it).push_front(*remainderIt);
+        (*it).addStudent(*remainderIt);
     }
 
     finalGroupedStudents.eraseAllRemainders();
 }
 
-int ImperfectMergeGrouper::calculateStudentCompatability(std::list<Student> studentGroup1,
-                                                          std::list<Student> studentGroup2) {
+int ImperfectMergeGrouper::calculateStudentCompatability(StudentGroup studentGroup1,
+                                                         StudentGroup studentGroup2) {
     int total = 0;
     for (auto s1 : studentGroup1) {
         for (auto s2 : studentGroup2) {

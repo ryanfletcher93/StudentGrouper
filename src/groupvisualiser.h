@@ -33,7 +33,7 @@ public:
      *
      * @param studentGroup
      */
-    void setStudentGroup(std::list<Student> studentGroup);
+    void setStudentGroup(StudentGroup studentGroup);
 
     /**
      * @brief setNodePositions
@@ -59,7 +59,7 @@ private:
     void drawNodeEdges(Node *node);
 
     std::vector<Node *> nodes;
-    std::list<Student> studentGroup;
+    StudentGroup studentGroup;
     std::string groupString;
 
     QGraphicsScene *scene;

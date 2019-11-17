@@ -69,6 +69,7 @@ void MainWindow::on_analyseDataButton_clicked()
     grouper->setStudentSet(ss);
     grouper->setNumberGroups(numGroups);
 
+    // Attempt to group the students provided in config file
     try {
         this->groupedStudents = grouper->groupStudents();
     }
@@ -81,6 +82,8 @@ void MainWindow::on_analyseDataButton_clicked()
     int happinessScore = groupedStudents.calculateHappinessScore();
     QString happinessScoreString = QString::number(happinessScore);
     ui->happinessScoreDisplay->setText(happinessScoreString);
+
+    updateViewGroupOptions();
 
     delete grouper;
 }
@@ -115,7 +118,7 @@ void MainWindow::on_viewResults_clicked()
     int comboBoxIndex = ui->viewResultsGroupComboBox->currentIndex();
 
     int itIndex = 0;
-    std::list<Student> studentGroup;
+    StudentGroup studentGroup;
     for (auto it = groupedStudents.begin(); it != groupedStudents.end(); it++) {
         if (itIndex == comboBoxIndex) {
             studentGroup = *it;
@@ -155,10 +158,22 @@ void MainWindow::on_selectGroupedStudentCsvButton_clicked()
     try {
         this->groupedStudents = bea.parseGroupedConfigFile(fileName.toStdString());
         ui->csvFilePathDisplay_2->setText(fileName);
+
+        updateViewGroupOptions();
     }
     catch (...) {
         QMessageBox box;
         box.setText("Invalid input csv, please check and enter again");
         box.exec();
+    }
+}
+
+void MainWindow::updateViewGroupOptions() {
+    ui->viewResultsGroupComboBox->clear();
+
+    int numGroups = this->groupedStudents.size();
+
+    for (int groupIt = 1; groupIt <= numGroups; groupIt++) {
+        ui->viewResultsGroupComboBox->addItem(QString::number(groupIt));
     }
 }
