@@ -4,6 +4,7 @@
 class GroupVisualiser;
 
 #include "groupedstudents.h"
+#include "studentset.h"
 #include "node.h"
 
 #include <QGraphicsView>
@@ -33,7 +34,7 @@ public:
      *
      * @param studentGroup
      */
-    void setStudentGroup(StudentGroup studentGroup);
+    void setStudentGroup(StudentSet studentSet);
 
     /**
      * @brief setNodePositions
@@ -59,7 +60,7 @@ private:
     void drawNodeEdges(Node *node);
 
     std::vector<Node *> nodes;
-    StudentGroup studentGroup;
+    StudentSet studentSet;
     std::string groupString;
 
     QGraphicsScene *scene;

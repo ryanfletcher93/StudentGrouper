@@ -11,10 +11,10 @@
  * Provides interface between the MainWindow GUI and the backend logic
  * TODO: Reorder logic to only have interface, no backend logic in this class
  */
-class BackendAdaptor
+class AlgorithmBackend
 {
 public:
-    BackendAdaptor();
+    AlgorithmBackend();
 
     /**
      * @brief parseConfigFile
@@ -66,6 +66,8 @@ public:
 
 private:
     std::string createCsvLineFromStudent(Student s);
+
+    GroupedStudents configStudents;
 
     CsvParser csvParser;
     GroupedCsvParser groupedCsvParser;

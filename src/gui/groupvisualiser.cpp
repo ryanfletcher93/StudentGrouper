@@ -24,22 +24,22 @@ GroupVisualiser::GroupVisualiser(QWidget* parent) :
     setWindowTitle(tr("Grouped Students"));
 }
 
-void GroupVisualiser::setStudentGroup(StudentGroup studentGroup) {
-    this->studentGroup = studentGroup;
+void GroupVisualiser::setStudentGroup(StudentSet studentSet) {
+    this->studentSet = studentSet;
 }
 
 void GroupVisualiser::setNodePositions() {
     // If nothing in
-    if (studentGroup.begin() == studentGroup.end()) {
+    if (studentSet.isEmpty()) {
         return;
     }
 
-    int numNodes = static_cast<int>(studentGroup.size());
+    int numNodes = static_cast<int>(studentSet.getStudentList().size());
     double nodeAngleDeg = DEG_CIRCLE / numNodes;
 
     int nodeCount=0;
-    for (auto it = studentGroup.begin(); it != studentGroup.end(); it++) {
-        Node *n = new Node(this, *it);
+    for (auto it : studentSet.getStudentList()) {
+        Node *n = new Node(this, it);
 
         // Get the node position using angles in radians
         double xPos, yPos;

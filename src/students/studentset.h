@@ -1,7 +1,6 @@
 #ifndef STUDENTSET_H
 #define STUDENTSET_H
 
-#include "groupedstudents.h"
 #include "student.h"
 
 #include <vector>
@@ -58,6 +57,11 @@ public:
      * @return
      */
     std::vector<Student> randomize();
+
+    /**
+     *
+     */
+    int getHappinessScore();
 
 private:
     std::vector<Student> students;

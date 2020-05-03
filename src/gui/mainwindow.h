@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "backendadaptor.h"
+#include "algorithmbackend.h"
 
 #include <QMainWindow>
 
@@ -22,8 +22,8 @@ public:
     const int defaultNumberGroups = 5;
 
     /// Debug file paths used for testing
-    const std::string inputCsvFilePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\setup\\mockCsvInput.csv";
-    const std::string exportCsvFilePath = "C:\\Users\\Ryan Fletcher\\Documents\\Programming Projects\\Qt\\StudentGrouper\\setup\\mockCsvOutput.csv";
+    const std::string inputCsvFilePath;
+    const std::string exportCsvFilePath;
 
 private slots:
     void on_selectStudentCsvButton_clicked();
@@ -43,7 +43,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    BackendAdaptor bea;
+    AlgorithmBackend algorithmBackend;
+
     GroupedStudents groupedStudents;
 };
 #endif // MAINWINDOW_H

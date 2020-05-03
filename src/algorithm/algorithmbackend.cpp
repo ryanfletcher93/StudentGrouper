@@ -1,15 +1,16 @@
-#include "backendadaptor.h"
+#include "algorithmbackend.h"
 
 #include <iostream>
 #include <fstream>
 #include <QMessageBox>
 
-BackendAdaptor::BackendAdaptor()
+AlgorithmBackend::AlgorithmBackend()
 {
 
 }
 
-void BackendAdaptor::parseConfigFile(std::string configFile) {
+void AlgorithmBackend::parseConfigFile(std::string configFile)
+{
     csvParser.setFilePath(configFile);
 
     try {
@@ -22,7 +23,8 @@ void BackendAdaptor::parseConfigFile(std::string configFile) {
     }
 }
 
-GroupedStudents BackendAdaptor::parseGroupedConfigFile(std::string configFile) {
+GroupedStudents AlgorithmBackend::parseGroupedConfigFile(std::string configFile)
+{
     groupedCsvParser.setFilePath(configFile);
 
     try {
@@ -37,19 +39,21 @@ GroupedStudents BackendAdaptor::parseGroupedConfigFile(std::string configFile) {
     return this->groupedStudents;
 }
 
-bool BackendAdaptor::hasValidUngroupedInputFile() {
+bool AlgorithmBackend::hasValidUngroupedInputFile()
+{
     return !this->studentSet.isEmpty();
 }
 
-void BackendAdaptor::writeOutputToFile(std::string filePath, GroupedStudents groupedStudents) {
+void AlgorithmBackend::writeOutputToFile(std::string filePath, GroupedStudents groupedStudents)
+{
     if (groupedStudents.isEmpty()) {
         throw "No output to generate";
     }
 
     std::string outputLines = "";
     int groupId = 1;
-    for (auto groupIt = groupedStudents.begin(); groupIt != groupedStudents.end(); groupIt++) {
-        for (Student s : *groupIt) {
+    for (auto groupIt : groupedStudents.getGroups()) {
+        for (auto s : groupIt.getStudentList()) {
             outputLines += std::to_string(groupId) + "," + createCsvLineFromStudent(s) + "\n";
         }
         groupId++;
@@ -61,7 +65,8 @@ void BackendAdaptor::writeOutputToFile(std::string filePath, GroupedStudents gro
     fout.close();
 }
 
-std::string BackendAdaptor::createCsvLineFromStudent(Student s) {
+std::string AlgorithmBackend::createCsvLineFromStudent(Student s)
+{
     std::string studentString = "";
 
     studentString += std::to_string(s.getStudentId()) + "," + s.getFirstName() +
@@ -74,6 +79,7 @@ std::string BackendAdaptor::createCsvLineFromStudent(Student s) {
     return studentString;
 }
 
-StudentSet BackendAdaptor::getStudentSet() {
+StudentSet AlgorithmBackend::getStudentSet()
+{
     return studentSet;
 }

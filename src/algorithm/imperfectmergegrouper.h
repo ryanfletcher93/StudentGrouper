@@ -27,26 +27,6 @@ public:
     GroupedStudents groupStudents() override;
 
 private:
-    /**
-     * @brief reduceGroups
-     * Merge the groups with naive most compatible groups
-     *
-     * @param groupedStudents
-     * @return
-     */
-    GroupedStudents reduceGroups(GroupedStudents groupedStudents);
-
-    /**
-     * @brief addGroupsToRemainder
-     * Add any relevant groups to remainder
-     */
-    void addGroupsToRemainder();
-
-    /**
-     * @brief addRemainderToRestOfGroup
-     * Add any remaining groups to existing groups evenly
-     */
-    void addRemainderToRestOfGroup();
 
     /**
      * @brief calculateStudentCompatability
@@ -57,7 +37,7 @@ private:
      * @param studentGroup2
      * @return
      */
-    static int calculateStudentCompatability(StudentGroup studentGroup1, StudentGroup studentGroup2);
+    static int calculateStudentCompatability(StudentSet studentGroup1, StudentSet studentGroup2);
 };
 
 #endif // IMPERFECTMERGEGROUPER_H

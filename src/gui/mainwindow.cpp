@@ -30,17 +30,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_selectStudentCsvButton_clicked()
 {
-    QString fileName;
-    if (testing) {
-        fileName = QString::fromStdString(inputCsvFilePath);
-    }
-    else {
-        fileName = QFileDialog::getOpenFileName(this,
-            tr("Open Csv"), "", tr("*.csv"));
-    }
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Csv"), "", tr("*.csv"));
 
     try {
-        bea.parseConfigFile(fileName.toStdString());
+        algorithmBackend.parseConfigFile(fileName.toStdString());
         ui->csvFilePathDisplay->setText(fileName);
     }
     catch (...) {
@@ -52,7 +45,7 @@ void MainWindow::on_selectStudentCsvButton_clicked()
 
 void MainWindow::on_analyseDataButton_clicked()
 {
-    if (!bea.hasValidUngroupedInputFile()) {
+    if (!algorithmBackend.hasValidUngroupedInputFile()) {
         QMessageBox box;
         box.setText("No input csv chosen, please select input csv first");
         box.exec();
@@ -60,7 +53,7 @@ void MainWindow::on_analyseDataButton_clicked()
         return;
     }
 
-    StudentSet ss = bea.getStudentSet();
+    StudentSet ss = algorithmBackend.getStudentSet();
     ss.randomize();
 
     int numGroups = ui->numGroupsSpinBox->value();
@@ -102,7 +95,7 @@ void MainWindow::on_exportCsvButton_clicked()
     ui->exportCsvDisplay->setText(qExportFilePath);
 
     try {
-        bea.writeOutputToFile(qExportFilePath.toStdString(), groupedStudents);
+        algorithmBackend.writeOutputToFile(qExportFilePath.toStdString(), groupedStudents);
     }
     catch (...) {
         QMessageBox box;
@@ -118,16 +111,16 @@ void MainWindow::on_viewResults_clicked()
     int comboBoxIndex = ui->viewResultsGroupComboBox->currentIndex();
 
     int itIndex = 0;
-    StudentGroup studentGroup;
-    for (auto it = groupedStudents.begin(); it != groupedStudents.end(); it++) {
+    StudentSet studentSet;
+    for (auto it : groupedStudents.getGroups()) {
         if (itIndex == comboBoxIndex) {
-            studentGroup = *it;
+            studentSet = it;
         }
 
         itIndex++;
     }
 
-    wdg->setStudentGroup(studentGroup);
+    wdg->setStudentGroup(studentSet);
     wdg->setNodePositions();
     std::string groupLabel = "Group " + ui->viewResultsGroupComboBox->currentText().toStdString();
     wdg->setGroupIdentifier(groupLabel);
@@ -156,7 +149,7 @@ void MainWindow::on_selectGroupedStudentCsvButton_clicked()
     }
 
     try {
-        this->groupedStudents = bea.parseGroupedConfigFile(fileName.toStdString());
+        this->groupedStudents = algorithmBackend.parseGroupedConfigFile(fileName.toStdString());
         ui->csvFilePathDisplay_2->setText(fileName);
 
         updateViewGroupOptions();
@@ -171,7 +164,7 @@ void MainWindow::on_selectGroupedStudentCsvButton_clicked()
 void MainWindow::updateViewGroupOptions() {
     ui->viewResultsGroupComboBox->clear();
 
-    int numGroups = this->groupedStudents.size();
+    int numGroups = this->groupedStudents.getGroups().size();
 
     for (int groupIt = 1; groupIt <= numGroups; groupIt++) {
         ui->viewResultsGroupComboBox->addItem(QString::number(groupIt));

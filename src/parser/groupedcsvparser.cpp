@@ -55,7 +55,7 @@ GroupedStudents GroupedCsvParser::parseGroupedFile() {
 
 
 void GroupedCsvParser::groupStudents(std::vector<std::string> csvContents) {
-    std::map<int, StudentGroup> m;
+    std::map<int, StudentSet> m;
     for (std::string line : csvContents) {
         std::stringstream ss(line);
         std::string token;
@@ -128,6 +128,4 @@ Student GroupedCsvParser::getStudentFromGroupedCsvLine(std::vector<std::string> 
             return Student(firstName, middleName, familyName, id);
         }
     }
-
-    throw "ABV";
 }

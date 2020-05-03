@@ -16,7 +16,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    backendadaptor.cpp \
+    algorithm/algorithmbackend.cpp \
+    algorithm/basegrouper.cpp \
+    algorithm/imperfectmergegrouper.cpp \
+    algorithmbackend.cpp \
     basegrouper.cpp \
     bidirectionaledge.cpp \
     csvparser.cpp \
@@ -24,18 +27,33 @@ SOURCES += \
     groupedcsvparser.cpp \
     groupedstudents.cpp \
     groupvisualiser.cpp \
+    gui/bidirectionaledge.cpp \
+    gui/edge.cpp \
+    gui/groupvisualiser.cpp \
+    gui/mainwindow.cpp \
+    gui/node.cpp \
+    gui/unidirectionaledge.cpp \
     imperfectmergegrouper.cpp \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
+    parser/csvparser.cpp \
+    parser/groupedcsvparser.cpp \
     student.cpp \
-    studentgroup.cpp \
     studentpreference.cpp \
+    students/groupedstudents.cpp \
+    students/student.cpp \
+    students/studentpreference.cpp \
+    students/studentset.cpp \
+    students/studentsetanalyser.cpp \
     studentset.cpp \
     unidirectionaledge.cpp
 
 HEADERS += \
-    backendadaptor.h \
+    algorithm/algorithmbackend.h \
+    algorithm/basegrouper.h \
+    algorithm/imperfectmergegrouper.h \
+    algorithmbackend.h \
     basegrouper.h \
     bidirectionaledge.h \
     csvparser.h \
@@ -43,16 +61,28 @@ HEADERS += \
     groupedcsvparser.h \
     groupedstudents.h \
     groupvisualiser.h \
+    gui/bidirectionaledge.h \
+    gui/edge.h \
+    gui/groupvisualiser.h \
+    gui/mainwindow.h \
+    gui/node.h \
+    gui/unidirectionaledge.h \
     imperfectmergegrouper.h \
     mainwindow.h \
     node.h \
+    parser/csvparser.h \
+    parser/groupedcsvparser.h \
     student.h \
-    studentgroup.h \
     studentpreference.h \
+    students/groupedstudents.h \
+    students/student.h \
+    students/studentpreference.h \
+    students/studentset.h \
     studentset.h \
     unidirectionaledge.h
 
 FORMS += \
+    gui/mainwindow.ui \
     mainwindow.ui
 
 INCLUDEPATH += C:\\Users\\Ryan\ Fletcher\\Documents\\Programming\ Projects\\google-test\\googletest \
