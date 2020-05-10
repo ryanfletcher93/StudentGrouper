@@ -4,14 +4,14 @@
 #include "basegrouper.h"
 #include "../students/groupedstudents.h"
 
-struct KerninghanStudent {
+struct KernighanStudent {
     Student student;
     std::vector<std::pair<int, int>> ExternalCost;
     int InternalCost = 0;
 };
 
 struct KernighanLinStudentGroup {
-    std::vector<KerninghanStudent> studentGroup;
+    std::vector<KernighanStudent> studentGroup;
     int groupNumber = 0;
 };
 
@@ -23,7 +23,6 @@ class ImperfectMergeGrouper : public BaseGrouper
 {
 public:
     ImperfectMergeGrouper();
-    //~KernighanLinAlgorithm();
 
     GroupedStudents* groupStudents(StudentSet& studentSet, int numGroups) override;
 

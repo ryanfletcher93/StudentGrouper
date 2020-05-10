@@ -3,6 +3,8 @@
 
 #include "student.h"
 
+#include <algorithm>
+
 #include <vector>
 
 /**
@@ -50,6 +52,9 @@ public:
         return students;
     }
 
+    void randomize() {
+        std::random_shuffle(students.begin(), students.end());
+    }
 
     /**
       *
