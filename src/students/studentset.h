@@ -50,17 +50,10 @@ public:
         return students;
     }
 
-    /**
-     * @brief randomize
-     * Randomize the student set order
-     *
-     * @return
-     */
-    std::vector<Student> randomize();
 
     /**
-     *
-     */
+      *
+      */
     int getHappinessScore();
 
 private:

@@ -1,8 +1,11 @@
-#ifndef BACKENDADAPTOR_H
-#define BACKENDADAPTOR_H
+#ifndef ALGORITHMBACKEND_H
+#define ALGORITHMBACKEND_H
 
-#include "csvparser.h"
-#include "groupedcsvparser.h"
+#include "../parser/csvparser.h"
+#include "../parser/groupedcsvparser.h"
+#include "../algorithm/basegrouper.h"
+#include "../algorithm/kernighanlinalgorithm.h"
+#include "../students/groupedstudents.h"
 
 #include <string>
 
@@ -23,7 +26,7 @@ public:
      *
      * @param configFile
      */
-    void parseConfigFile(std::string configFile);
+    bool parseConfigFile(std::string configFile);
 
 
     /**
@@ -44,6 +47,13 @@ public:
      * @return
      */
     bool hasValidUngroupedInputFile();
+
+
+    /**
+      * @brief gropuStudnets
+      *
+      */
+    GroupedStudents* groupStudents(BaseGrouper* groupingAlgorithm, int numGroups);
 
 
     /**
@@ -75,4 +85,4 @@ private:
     GroupedStudents groupedStudents;
 };
 
-#endif // BACKENDADAPTOR_H
+#endif // ALGORITHMBACKEND_H

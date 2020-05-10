@@ -1,7 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "algorithmbackend.h"
+#include "../algorithm/algorithmbackend.h"
+#include "../students/groupedstudents.h"
 
 #include <QMainWindow>
 
@@ -45,6 +46,6 @@ private:
 
     AlgorithmBackend algorithmBackend;
 
-    GroupedStudents groupedStudents;
+    GroupedStudents* groupedStudents;
 };
 #endif // MAINWINDOW_H

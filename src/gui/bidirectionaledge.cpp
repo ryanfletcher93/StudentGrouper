@@ -1,6 +1,6 @@
 #include "bidirectionaledge.h"
 
-#define M_PI 3.14159265
+#include "math.h"
 
 BidirectionalEdge::BidirectionalEdge(Node *source, Node *dest) :
     Edge(source, dest)

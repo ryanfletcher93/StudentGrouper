@@ -1,7 +1,5 @@
 #include "edge.h"
 
-#define M_PI 3.14159
-
 Edge::Edge(Node *sourceNode, Node *destNode) :
     source(sourceNode), dest(destNode), arrowSize(10)
 {

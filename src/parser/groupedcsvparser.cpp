@@ -128,4 +128,6 @@ Student GroupedCsvParser::getStudentFromGroupedCsvLine(std::vector<std::string> 
             return Student(firstName, middleName, familyName, id);
         }
     }
+
+    return Student();
 }

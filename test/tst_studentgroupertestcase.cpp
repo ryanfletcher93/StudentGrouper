@@ -1,10 +1,10 @@
 #include <QtTest>
 
-#include "../src/csvparser.h"
-#include "../src/studentset.h"
-#include "../src/groupedstudents.h"
-#include "../src/basegrouper.h"
-#include "../src/imperfectmergegrouper.h"
+#include "../src/parser/csvparser.h"
+#include "../src/students/studentset.h"
+#include "../src/students/groupedstudents.h"
+#include "../src/algorithm/basegrouper.h"
+#include "../src/algorithm/imperfectmergegrouper.h"
 
 class StudentGrouperTestCase : public QObject
 {
@@ -19,7 +19,7 @@ private slots:
     void numStudentsInEachGroupTest();
 
 private:
-    std::string csvFilePath = "C:\\Users\\Ryan\ Fletcher\\Documents\\Programming\ Projects\\Qt\\StudentGrouper\\test\\mockCsvInput.csv";
+    std::string csvFilePath = "./test/mockCsvInput.csv";
 
     StudentSet ss;
     GroupedStudents gs;

@@ -1,6 +1,6 @@
 #include "unidirectionaledge.h"
 
-#define M_PI 3.14159265
+#include "math.h"
 
 UnidirectionalEdge::UnidirectionalEdge(Node *source, Node *dest) :
     Edge(source, dest)

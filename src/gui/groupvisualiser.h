@@ -3,8 +3,8 @@
 
 class GroupVisualiser;
 
-#include "groupedstudents.h"
-#include "studentset.h"
+#include "../students/groupedstudents.h"
+#include "../students/studentset.h"
 #include "node.h"
 
 #include <QGraphicsView>

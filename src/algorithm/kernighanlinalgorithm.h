@@ -1,9 +1,10 @@
-    #ifndef IMPERFECTMERGEGROUPER_H
-#define IMPERFECTMERGEGROUPER_H
+#ifndef KERNIGHANLINALGORITHM_H
+#define KERNIGHANLINALGORITHM_H
 
 #include "basegrouper.h"
-#include "../students/groupedstudents.h"
 
+#include "../students/groupedstudents.h"
+/*
 struct KerninghanStudent {
     Student student;
     std::vector<std::pair<int, int>> ExternalCost;
@@ -15,17 +16,13 @@ struct KernighanLinStudentGroup {
     int groupNumber = 0;
 };
 
-/**
- * @brief The ImperfectMergeGrouper class
- * Group the students based on a merge algorithm
- */
-class ImperfectMergeGrouper : public BaseGrouper
+class KernighanLinAlgorithm
 {
+
 public:
-    ImperfectMergeGrouper();
     //~KernighanLinAlgorithm();
 
-    GroupedStudents* groupStudents(StudentSet& studentSet, int numGroups) override;
+    GroupedStudents groupStudents(StudentSet studentSet, int numGroups);
 
 private:
     std::vector<KernighanLinStudentGroup> initialiseGroups(StudentSet studentSet, int numGroups);
@@ -34,10 +31,10 @@ private:
 
     void swapHighestCostStudents();
 
-    GroupedStudents* createGroupedStudentsOutput();
+    GroupedStudents createGroupedStudentsOutput();
 
 
     std::vector<KernighanLinStudentGroup> groups;
 };
-
-#endif // IMPERFECTMERGEGROUPER_H
+*/
+#endif // KERNIGHANLINALGORITHM_H

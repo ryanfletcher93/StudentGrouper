@@ -1,17 +1,13 @@
-#include "imperfectmergegrouper.h"
-
+#include "kernighanlinalgorithm.h"
 
 #include "../students/student.h"
 #include "../students/studentset.h"
 
+/*
+
 using std::vector;
 
-ImperfectMergeGrouper::ImperfectMergeGrouper()
-{
-
-}
-
-vector<KernighanLinStudentGroup> ImperfectMergeGrouper::initialiseGroups(StudentSet studentSet, int numGroups)
+vector<KernighanLinStudentGroup> KernighanLinAlgorithm::initialiseGroups(StudentSet studentSet, int numGroups)
 {
     vector<KernighanLinStudentGroup> groups;
     for (int i = 0; i < numGroups; i++)
@@ -23,7 +19,7 @@ vector<KernighanLinStudentGroup> ImperfectMergeGrouper::initialiseGroups(Student
     return groups;
 }
 
-void ImperfectMergeGrouper::calculateCosts()
+void KernighanLinAlgorithm::calculateCosts()
 {
     for (auto& group : groups)
     {
@@ -69,14 +65,14 @@ void ImperfectMergeGrouper::calculateCosts()
     }
 }
 
-void ImperfectMergeGrouper::swapHighestCostStudents()
+void KernighanLinAlgorithm::swapHighestCostStudents()
 {
 
 }
 
-GroupedStudents* ImperfectMergeGrouper::createGroupedStudentsOutput()
+GroupedStudents KernighanLinAlgorithm::createGroupedStudentsOutput()
 {
-    GroupedStudents* groupedStudents = new GroupedStudents();
+    GroupedStudents groupedStudents;
 
     for (auto& group : groups)
     {
@@ -86,14 +82,14 @@ GroupedStudents* ImperfectMergeGrouper::createGroupedStudentsOutput()
             studentSet.addStudent(student.student);
         }
 
-        groupedStudents->addGroup(studentSet);
+        groupedStudents.addGroup(studentSet);
     }
 
     return groupedStudents;
 }
 
 
-GroupedStudents* ImperfectMergeGrouper::groupStudents(StudentSet& studentSet, int numGroups)
+GroupedStudents KernighanLinAlgorithm::groupStudents(StudentSet studentSet, int numGroups)
 {
     this->groups = initialiseGroups(studentSet, numGroups);
 
@@ -103,3 +99,5 @@ GroupedStudents* ImperfectMergeGrouper::groupStudents(StudentSet& studentSet, in
 
     return createGroupedStudentsOutput();
 }
+
+*/

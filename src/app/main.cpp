@@ -1,6 +1,6 @@
-#include "algorithmbackend.h"
-#include "csvparser.h"
-#include "mainwindow.h"
+#include "../gui/mainwindow.h"
+
+#include "QObjectUserData"
 
 #include <QApplication>
 

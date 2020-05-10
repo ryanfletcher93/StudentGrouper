@@ -1,5 +1,7 @@
 #include "algorithmbackend.h"
 
+#include "../algorithm/imperfectmergegrouper.h"
+
 #include <iostream>
 #include <fstream>
 #include <QMessageBox>
@@ -9,19 +11,24 @@ AlgorithmBackend::AlgorithmBackend()
 
 }
 
-void AlgorithmBackend::parseConfigFile(std::string configFile)
+
+bool AlgorithmBackend::parseConfigFile(std::string configFile)
 {
+    bool isLoadSuccessful = false;
+
     csvParser.setFilePath(configFile);
 
     try {
         this->studentSet = csvParser.parseFile();
+        isLoadSuccessful = true;
     }
     catch (...) {
-        QMessageBox box;
-        box.setText("Invalid input csv, please check and enter again");
-        box.exec();
+
     }
+
+    return isLoadSuccessful;
 }
+
 
 GroupedStudents AlgorithmBackend::parseGroupedConfigFile(std::string configFile)
 {
@@ -39,10 +46,20 @@ GroupedStudents AlgorithmBackend::parseGroupedConfigFile(std::string configFile)
     return this->groupedStudents;
 }
 
+
 bool AlgorithmBackend::hasValidUngroupedInputFile()
 {
     return !this->studentSet.isEmpty();
 }
+
+
+GroupedStudents* AlgorithmBackend::groupStudents(BaseGrouper *groupingAlgorithm, int numGroups)
+{
+    ImperfectMergeGrouper algorithm;
+    GroupedStudents* groupedStudents = algorithm.groupStudents(this->studentSet, numGroups);
+    return groupedStudents;
+}
+
 
 void AlgorithmBackend::writeOutputToFile(std::string filePath, GroupedStudents groupedStudents)
 {
@@ -65,6 +82,7 @@ void AlgorithmBackend::writeOutputToFile(std::string filePath, GroupedStudents g
     fout.close();
 }
 
+
 std::string AlgorithmBackend::createCsvLineFromStudent(Student s)
 {
     std::string studentString = "";
@@ -78,6 +96,7 @@ std::string AlgorithmBackend::createCsvLineFromStudent(Student s)
 
     return studentString;
 }
+
 
 StudentSet AlgorithmBackend::getStudentSet()
 {

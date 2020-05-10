@@ -1,4 +1,5 @@
 #include "groupvisualiser.h"
+
 #include "bidirectionaledge.h"
 #include "unidirectionaledge.h"
 

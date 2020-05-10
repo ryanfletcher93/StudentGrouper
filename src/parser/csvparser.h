@@ -1,8 +1,8 @@
 #ifndef CSVPARSER_H
 #define CSVPARSER_H
 
-#include "studentset.h"
-#include "student.h"
+#include "../students/studentset.h"
+#include "../students/student.h"
 
 #include <string>
 #include <vector>

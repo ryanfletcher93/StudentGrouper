@@ -31,12 +31,6 @@ std::pair<bool, Student&> StudentSet::getStudentById(int id)
     return defaultReturn;
 }
 
-std::vector<Student> StudentSet::randomize()
-{
-    std::random_shuffle(students.begin(), students.end());
-    return this->students;
-}
-
 int StudentSet::getHappinessScore()
 {
     int total = 0;

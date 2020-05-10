@@ -9,38 +9,38 @@ TEMPLATE = app
 
 VPATH += ../src
 
-HEADERS += \
-    backendadaptor.h \
-    basegrouper.h \
-    bidirectionaledge.h \
-    csvparser.h \
-    edge.h \
-    groupedcsvparser.h \
-    groupedstudents.h \
-    groupvisualiser.h \
-    imperfectmergegrouper.h \
-    node.h \
-    student.h \
-    studentgroup.h \
-    studentpreference.h \
-    studentset.h \
-    unidirectionaledge.h
-
 SOURCES += \
-    tst_studentgroupertestcase.cpp \
-    backendadaptor.cpp \
-    basegrouper.cpp \
-    bidirectionaledge.cpp \
-    csvparser.cpp \
-    edge.cpp \
-    groupedcsvparser.cpp \
-    groupedstudents.cpp \
-    groupvisualiser.cpp \
-    imperfectmergegrouper.cpp \
-    node.cpp \
-    student.cpp \
-    studentgroup.cpp \
-    studentpreference.cpp \
-    studentset.cpp \
-    unidirectionaledge.cpp
+    algorithm/algorithmbackend.cpp \
+    algorithm/basegrouper.cpp \
+    algorithm/imperfectmergegrouper.cpp \
+    gui/bidirectionaledge.cpp \
+    gui/edge.cpp \
+    gui/groupvisualiser.cpp \
+    gui/node.cpp \
+    gui/unidirectionaledge.cpp \
+    gui/mainwindow.cpp \
+    app/main.cpp \
+    parser/csvparser.cpp \
+    parser/groupedcsvparser.cpp \
+    students/groupedstudents.cpp \
+    students/student.cpp \
+    students/studentpreference.cpp \
+    students/studentset.cpp
+
+HEADERS += \
+    algorithm/algorithmbackend.h \
+    algorithm/basegrouper.h \
+    algorithm/imperfectmergegrouper.h \
+    gui/bidirectionaledge.h \
+    gui/edge.h \
+    gui/groupvisualiser.h \
+    gui/node.h \
+    gui/unidirectionaledge.h \
+    gui/mainwindow.h \
+    parser/csvparser.h \
+    parser/groupedcsvparser.h \
+    students/groupedstudents.h \
+    students/student.h \
+    students/studentpreference.h \
+    students/studentset.h
 

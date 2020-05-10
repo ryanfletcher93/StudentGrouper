@@ -1,7 +1,10 @@
-#include "groupvisualiser.h"
-#include "imperfectmergegrouper.h"
+
 #include "mainwindow.h"
+
+#include "groupvisualiser.h"
 #include "ui_mainwindow.h"
+
+#include "../algorithm/imperfectmergegrouper.h"
 
 #include <QFileDialog>
 #include <QGraphicsView>
@@ -53,32 +56,19 @@ void MainWindow::on_analyseDataButton_clicked()
         return;
     }
 
-    StudentSet ss = algorithmBackend.getStudentSet();
-    ss.randomize();
-
     int numGroups = ui->numGroupsSpinBox->value();
 
-    BaseGrouper *grouper = new ImperfectMergeGrouper();
-    grouper->setStudentSet(ss);
-    grouper->setNumberGroups(numGroups);
+    BaseGrouper* algorithm = new ImperfectMergeGrouper();
 
-    // Attempt to group the students provided in config file
-    try {
-        this->groupedStudents = grouper->groupStudents();
-    }
-    catch (...) {
-        QMessageBox box;
-        box.setText("Error when grouping students.");
-        box.exec();
-    }
+    this->groupedStudents = algorithmBackend.groupStudents(algorithm, numGroups);
 
-    int happinessScore = groupedStudents.calculateHappinessScore();
+    int happinessScore = groupedStudents->calculateHappinessScore();
     QString happinessScoreString = QString::number(happinessScore);
     ui->happinessScoreDisplay->setText(happinessScoreString);
 
     updateViewGroupOptions();
 
-    delete grouper;
+    delete algorithm;
 }
 
 void MainWindow::on_exportCsvButton_clicked()
@@ -95,7 +85,7 @@ void MainWindow::on_exportCsvButton_clicked()
     ui->exportCsvDisplay->setText(qExportFilePath);
 
     try {
-        algorithmBackend.writeOutputToFile(qExportFilePath.toStdString(), groupedStudents);
+        algorithmBackend.writeOutputToFile(qExportFilePath.toStdString(), *groupedStudents);
     }
     catch (...) {
         QMessageBox box;
@@ -112,7 +102,7 @@ void MainWindow::on_viewResults_clicked()
 
     int itIndex = 0;
     StudentSet studentSet;
-    for (auto it : groupedStudents.getGroups()) {
+    for (auto it : groupedStudents->getGroups()) {
         if (itIndex == comboBoxIndex) {
             studentSet = it;
         }
@@ -149,7 +139,7 @@ void MainWindow::on_selectGroupedStudentCsvButton_clicked()
     }
 
     try {
-        this->groupedStudents = algorithmBackend.parseGroupedConfigFile(fileName.toStdString());
+        //this->groupedStudents = algorithmBackend.parseGroupedConfigFile(fileName.toStdString());
         ui->csvFilePathDisplay_2->setText(fileName);
 
         updateViewGroupOptions();
@@ -164,7 +154,7 @@ void MainWindow::on_selectGroupedStudentCsvButton_clicked()
 void MainWindow::updateViewGroupOptions() {
     ui->viewResultsGroupComboBox->clear();
 
-    int numGroups = this->groupedStudents.getGroups().size();
+    int numGroups = this->groupedStudents->getGroups().size();
 
     for (int groupIt = 1; groupIt <= numGroups; groupIt++) {
         ui->viewResultsGroupComboBox->addItem(QString::number(groupIt));

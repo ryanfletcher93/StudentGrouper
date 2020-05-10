@@ -1,7 +1,7 @@
 #ifndef GROUPEDCSVPARSER_H
 #define GROUPEDCSVPARSER_H
 
-#include "groupedstudents.h"
+#include "../students/groupedstudents.h"
 
 /**
  * @brief The GroupedCsvParser class

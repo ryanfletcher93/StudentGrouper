@@ -45,7 +45,6 @@ public:
 
 private:
     std::vector<StudentSet> groupedStudents;
-    StudentSet remainderStudents;
 };
 
 #endif // GROUPEDSTUDENTS_H

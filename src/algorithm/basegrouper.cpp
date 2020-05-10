@@ -1,6 +1,6 @@
 #include "basegrouper.h"
 
-BaseGrouper::BaseGrouper()
+BaseGrouper::~BaseGrouper()
 {
 
 }
