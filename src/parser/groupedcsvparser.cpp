@@ -90,7 +90,7 @@ void GroupedCsvParser::groupStudents(std::vector<std::string> csvContents) {
         for (std::string pref : prefs) {
             studentPrefs.push_back(getStudentFromGroupedCsvLine(csvContents, pref));
         }
-        StudentPreference *sP = new StudentPreference(studentPrefs);
+        StudentPreference sP(studentPrefs);
         s.setStudentPreference(sP);
 
         m[group].addStudent(s);

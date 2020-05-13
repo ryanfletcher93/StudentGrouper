@@ -1,4 +1,7 @@
 #include "studentpreference.h"
+#include "student.h"
+
+#include <algorithm>
 
 StudentPreference::StudentPreference()
 {
@@ -6,13 +9,20 @@ StudentPreference::StudentPreference()
 }
 
 StudentPreference::StudentPreference(std::vector<Student> students) {
-    this->preferences = students;
+    std::vector<int> tempPreference;
+    std::for_each(
+        students.begin(),
+        students.end(),
+        [&tempPreference](Student& student) {tempPreference.push_back(student.getStudentId());}
+    );
+
+    preferences = tempPreference;
 }
 
 
 bool StudentPreference::isStudentInPreferences(Student s) {
-    for (auto studentIt : preferences) {
-        if (studentIt.getStudentId() == s.getStudentId()) {
+    for (auto studentId : preferences) {
+        if (studentId == s.getStudentId()) {
             return true;
         }
     }
@@ -21,10 +31,10 @@ bool StudentPreference::isStudentInPreferences(Student s) {
 }
 
 std::vector<int> StudentPreference::getPreferencesIds() {
-    std::vector<int> ids;
-    for (Student s : this->preferences) {
-        ids.push_back(s.getStudentId());
+    std::vector<int> returnIds;
+    for (int ids : this->preferences) {
+        returnIds.push_back(ids);
     }
 
-    return ids;
+    return returnIds;
 }

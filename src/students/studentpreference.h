@@ -1,8 +1,6 @@
 #ifndef STUDENTPREFERENCE_H
 #define STUDENTPREFERENCE_H
 
-#include "student.h"
-
 #include <array>
 #include <vector>
 
@@ -38,7 +36,7 @@ public:
     std::vector<int> getPreferencesIds();
 
 private:
-    std::vector<Student> preferences;
+    std::vector<int> preferences;
 };
 
 #endif // STUDENTPREFERENCE_H

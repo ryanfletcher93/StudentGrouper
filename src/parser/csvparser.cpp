@@ -96,7 +96,7 @@ void CsvParser::addStudentPreferences(std::vector<std::string> csvContents, std:
             preferredStudents.push_back(currStudentPreferencePair.second);
         }
 
-        StudentPreference *studentPreference = new StudentPreference(preferredStudents);
+        StudentPreference studentPreference(preferredStudents);
         student.setStudentPreference(studentPreference);
     }
 }

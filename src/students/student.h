@@ -5,8 +5,6 @@
 
 #include <string>
 
-class StudentPreference;
-
 /**
  * @brief The Student class
  * Define the properties and methods required of a Student
@@ -31,11 +29,6 @@ public:
      */
     Student(std::string firstName, std::string middleName, std::string familyName, int idNumber);
 
-    /// Destructor
-    ~Student() {
-        //delete studentPreference;
-    }
-
     /**
      * @brief isStudentInPreference
      * Returns true if @param s is in students preferences
@@ -56,7 +49,7 @@ public:
     static int calculateHappiness(Student s1, Student s2);
 
     /// Set and get student preferences
-    void setStudentPreference(StudentPreference *studentPreference);
+    void setStudentPreference(StudentPreference studentPreference);
     StudentPreference getStudentPreference();
 
     /// Get methods for the Student variables
@@ -80,7 +73,7 @@ private:
 
     int idNumber;
 
-    StudentPreference *studentPreference;
+    StudentPreference studentPreference;
 };
 
 #endif // STUDENT_H
