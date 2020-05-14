@@ -19,19 +19,20 @@ vector<KernighanLinStudentGroup> ImperfectMergeGrouper::initialiseGroups(Student
 
     studentSet.randomize();
 
+    int groupSize = floor(studentSet.getStudentList().size() / numGroups);
+    int numGroupsWithExtraPerson = studentSet.getStudentList().size() % numGroups;
+
     int groupCounter = 0;
     int studentCounter = 0;
-    int groupSize = floor(studentSet.getStudentList().size() / numGroups);
-    int studentIndex = 0;
     KernighanLinStudentGroup tempGroup;
     for (auto& student : studentSet.getStudentList())
     {
         KernighanStudent kStudent;
         kStudent.student = student;
         tempGroup.studentGroup.push_back(kStudent);
-        studentIndex++;
 
-        if (studentCounter == groupSize - 1)
+        if ((groupCounter < numGroupsWithExtraPerson && studentCounter == groupSize)
+                || (groupCounter >= numGroupsWithExtraPerson && studentCounter == groupSize - 1))
         {
             groups.push_back(tempGroup);
             tempGroup.groupNumber++;

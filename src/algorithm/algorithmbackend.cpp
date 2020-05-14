@@ -55,9 +55,7 @@ bool AlgorithmBackend::hasValidUngroupedInputFile()
 
 GroupedStudents* AlgorithmBackend::groupStudents(BaseGrouper *groupingAlgorithm, int numGroups)
 {
-    ImperfectMergeGrouper algorithm;
-    GroupedStudents* groupedStudents = algorithm.groupStudents(this->studentSet, numGroups);
-    return groupedStudents;
+    return groupingAlgorithm->groupStudents(this->studentSet, numGroups);
 }
 
 
