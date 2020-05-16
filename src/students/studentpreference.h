@@ -25,7 +25,7 @@ public:
      * @param s
      * @return
      */
-    bool isStudentInPreferences(Student s);
+    bool isStudentInPreferences(Student s) const;
 
     /**
      * @brief getPreferencesIds
@@ -33,7 +33,7 @@ public:
      *
      * @return
      */
-    std::vector<int> getPreferencesIds();
+    std::vector<int> getPreferencesIds() const;
 
 private:
     std::vector<int> preferences;

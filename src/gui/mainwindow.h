@@ -46,6 +46,6 @@ private:
 
     AlgorithmBackend algorithmBackend;
 
-    GroupedStudents* groupedStudents;
+    std::unique_ptr<GroupedStudents> groupedStudents;
 };
 #endif // MAINWINDOW_H

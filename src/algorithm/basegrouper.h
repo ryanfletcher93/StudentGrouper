@@ -4,6 +4,8 @@
 #include "../students/studentset.h"
 #include "../students/groupedstudents.h"
 
+#include <memory>
+
 
 /**
  * @brief The BaseGrouper class
@@ -19,7 +21,7 @@ public:
      *
      * @return
      */
-    virtual GroupedStudents* groupStudents(StudentSet& studentSet, int numGroups) = 0;
+    virtual std::unique_ptr<GroupedStudents> groupStudents(StudentSet& studentSet, int numGroups) = 0;
 
 private:
 

@@ -4,6 +4,8 @@
 #include "basegrouper.h"
 #include "../students/groupedstudents.h"
 
+#include <memory>
+
 struct KernighanStudent {
     Student student;
     std::vector<std::pair<int, int>> ExternalCost;
@@ -24,16 +26,24 @@ class ImperfectMergeGrouper : public BaseGrouper
 public:
     ImperfectMergeGrouper();
 
-    GroupedStudents* groupStudents(StudentSet& studentSet, int numGroups) override;
+    std::unique_ptr<GroupedStudents> groupStudents(StudentSet& studentSet, int numGroups) override;
 
 private:
     std::vector<KernighanLinStudentGroup> initialiseGroups(StudentSet studentSet, int numGroups);
 
     void calculateCosts();
 
+    int calculateInternalCost(const KernighanStudent& student, const KernighanLinStudentGroup& group);
+    std::pair<int, int> calculateExternalCost(const KernighanStudent& student, const KernighanLinStudentGroup& group);
+
     void swapHighestCostStudents();
 
-    GroupedStudents* createGroupedStudentsOutput();
+    std::pair<KernighanStudent, int> getStudentWithHighestCost();
+
+    void swapStudents(const KernighanStudent& student1, int student1Group,
+                      const KernighanStudent& student2, int student2Group);
+
+    std::unique_ptr<GroupedStudents> createGroupedStudentsOutput();
 
 
     std::vector<KernighanLinStudentGroup> groups;

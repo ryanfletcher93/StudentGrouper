@@ -16,10 +16,8 @@ bool AlgorithmBackend::parseConfigFile(std::string configFile)
 {
     bool isLoadSuccessful = false;
 
-    csvParser.setFilePath(configFile);
-
     try {
-        this->studentSet = csvParser.parseFile();
+        this->studentSet = csvParser.parseFile(configFile);
         isLoadSuccessful = true;
     }
     catch (...) {
@@ -30,12 +28,11 @@ bool AlgorithmBackend::parseConfigFile(std::string configFile)
 }
 
 
-GroupedStudents AlgorithmBackend::parseGroupedConfigFile(std::string configFile)
+std::unique_ptr<GroupedStudents> AlgorithmBackend::parseGroupedConfigFile(std::string configFile)
 {
-    groupedCsvParser.setFilePath(configFile);
-
+    std::unique_ptr<GroupedStudents> groupedStudents;
     try {
-        this->groupedStudents = groupedCsvParser.parseGroupedFile();
+        groupedStudents = groupedCsvParser.parseGroupedFile(configFile);
     }
     catch (...) {
         QMessageBox box;
@@ -43,7 +40,7 @@ GroupedStudents AlgorithmBackend::parseGroupedConfigFile(std::string configFile)
         box.exec();
     }
 
-    return this->groupedStudents;
+    return groupedStudents;
 }
 
 
@@ -53,7 +50,7 @@ bool AlgorithmBackend::hasValidUngroupedInputFile()
 }
 
 
-GroupedStudents* AlgorithmBackend::groupStudents(BaseGrouper *groupingAlgorithm, int numGroups)
+std::unique_ptr<GroupedStudents> AlgorithmBackend::groupStudents(BaseGrouper *groupingAlgorithm, int numGroups)
 {
     return groupingAlgorithm->groupStudents(this->studentSet, numGroups);
 }

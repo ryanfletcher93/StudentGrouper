@@ -56,15 +56,14 @@ void MainWindow::on_analyseDataButton_clicked()
         return;
     }
 
+    // Group students
     int numGroups = ui->numGroupsSpinBox->value();
-
     BaseGrouper* algorithm = new ImperfectMergeGrouper();
-
     this->groupedStudents = algorithmBackend.groupStudents(algorithm, numGroups);
 
+    // Calculate and show happiness score
     int happinessScore = groupedStudents->calculateHappinessScore();
-    QString happinessScoreString = QString::number(happinessScore);
-    ui->happinessScoreDisplay->setText(happinessScoreString);
+    ui->happinessScoreDisplay->setText(QString::number(happinessScore));
 
     updateViewGroupOptions();
 
@@ -139,7 +138,7 @@ void MainWindow::on_selectGroupedStudentCsvButton_clicked()
     }
 
     try {
-        //this->groupedStudents = algorithmBackend.parseGroupedConfigFile(fileName.toStdString());
+        this->groupedStudents = algorithmBackend.parseGroupedConfigFile(fileName.toStdString());
         ui->csvFilePathDisplay_2->setText(fileName);
 
         updateViewGroupOptions();

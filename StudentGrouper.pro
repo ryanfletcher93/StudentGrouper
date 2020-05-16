@@ -6,7 +6,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += ordered
 
-CONFIG += c++11
+CONFIG += c++17
 
 VPATH += \
     $$PWD/src/gui \

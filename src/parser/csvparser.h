@@ -12,17 +12,10 @@ class CsvParser
 {
 public:
     CsvParser();
-    CsvParser(std::string filePath);
 
-    void setFilePath(std::string filePath) {
-        this->filePath = filePath;
-    }
-
-    StudentSet parseFile();
+    StudentSet parseFile(std::string filePath);
 
 private:
-    std::string filePath = "";
-
     void addStudents(std::vector<std::string> csvContents, std::unique_ptr<StudentSet>& studentSet);
     void addStudentPreferences(std::vector<std::string> csvContents, std::unique_ptr<StudentSet>& studentSet);
 

@@ -13,11 +13,11 @@ void Student::setStudentPreference(StudentPreference studentPreference) {
     this->studentPreference = studentPreference;
 }
 
-StudentPreference Student::getStudentPreference() {
+StudentPreference Student::getStudentPreference() const {
     return studentPreference;
 }
 
-bool Student::isStudentInPreference(Student s) {
+bool Student::isStudentInPreference(Student s) const {
     return this->studentPreference.isStudentInPreferences(s);
 }
 

@@ -36,7 +36,7 @@ public:
      * @param s
      * @return
      */
-    bool isStudentInPreference(Student s);
+    bool isStudentInPreference(Student s) const;
 
     /**
      * @brief calculateHappiness
@@ -50,19 +50,19 @@ public:
 
     /// Set and get student preferences
     void setStudentPreference(StudentPreference studentPreference);
-    StudentPreference getStudentPreference();
+    StudentPreference getStudentPreference() const;
 
     /// Get methods for the Student variables
-    int getStudentId() {
+    int getStudentId() const {
         return idNumber;
     }
-    std::string getFirstName() {
+    std::string getFirstName() const {
         return firstName;
     }
-    std::string getMiddleName() {
+    std::string getMiddleName() const {
         return middleName;
     }
-    std::string getFamilyName() {
+    std::string getFamilyName() const {
         return familyName;
     }
 

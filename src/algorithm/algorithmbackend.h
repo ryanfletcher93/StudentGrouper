@@ -37,7 +37,7 @@ public:
      * @param configFile
      * @return
      */
-    GroupedStudents parseGroupedConfigFile(std::string configFile);
+    std::unique_ptr<GroupedStudents> parseGroupedConfigFile(std::string configFile);
 
 
     /**
@@ -53,7 +53,7 @@ public:
       * @brief gropuStudnets
       *
       */
-    GroupedStudents* groupStudents(BaseGrouper* groupingAlgorithm, int numGroups);
+    std::unique_ptr<GroupedStudents> groupStudents(BaseGrouper* groupingAlgorithm, int numGroups);
 
 
     /**

@@ -9,11 +9,7 @@ CsvParser::CsvParser()
 
 }
 
-CsvParser::CsvParser(std::string filePath) : filePath(filePath) {
-
-}
-
-StudentSet CsvParser::parseFile() {
+StudentSet CsvParser::parseFile(std::string filePath) {
     std::unique_ptr<StudentSet> studentSet(new StudentSet());
 
     std::vector<std::string> csvContents;

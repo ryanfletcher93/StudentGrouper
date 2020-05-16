@@ -54,91 +54,70 @@ void ImperfectMergeGrouper::calculateCosts()
 {
     for (auto& group : groups)
     {
-        for (auto& student1 : group.studentGroup)
+        for (auto& student : group.studentGroup)
         {
-            student1.InternalCost = 0;
-            student1.ExternalCost.clear();
-
-            int a = 1;
-            if (student1.student.getStudentId() == -1)
-            {
-                a = 2;
-            }
-
-            // Calculate internal costs
-            int internalCost = 0;
-            for (auto& student2 : group.studentGroup)
-            {
-                if (student1.student.getStudentId() != student2.student.getStudentId())
-                {
-                    if (student1.student.isStudentInPreference(student2.student))
-                    {
-                        internalCost++;
-                    }
-                }
-            }
-
-            student1.InternalCost = internalCost;
+            student.InternalCost = calculateInternalCost(student, group);
 
             // Calculate external costs for all other groups
-            for (auto& group2 : groups)
-            {
-                if (group.groupNumber != group2.groupNumber)
-                {
-                    std::pair<int, int> studentGroup;
-                    studentGroup.first = group2.groupNumber;
-
-                    int externalcost = 0;
-                    for (auto& student2 : group2.studentGroup)
-                    {
-                        if (student1.student.isStudentInPreference(student2.student))
-                        {
-                            externalcost++;
-                        }
-                    }
-
-                    studentGroup.second = externalcost;
-                    student1.ExternalCost.push_back(studentGroup);
+            student.ExternalCost.clear();
+            std::for_each(
+                groups.begin(),
+                groups.end(),
+                [this, &student](KernighanLinStudentGroup& group){
+                    student.ExternalCost.push_back(calculateExternalCost(student, group));
                 }
-            }
+            );
         }
     }
 }
 
-void ImperfectMergeGrouper::swapHighestCostStudents()
+int ImperfectMergeGrouper::calculateInternalCost(const KernighanStudent& student,
+                                                 const KernighanLinStudentGroup& group)
 {
-    // Get current lowest cost student
-    KernighanStudent firstSwappedStudent;
-    int firstSwappedStudentGroup = 0;
-    int firstCurrentMinCost = -1000;
-    for (auto& group : groups)
+    // Calculate internal costs
+    int internalCost = 0;
+    for (auto& internalStudent : group.studentGroup)
     {
-        for (auto& student : group.studentGroup)
+        if (student.student.getStudentId() != internalStudent.student.getStudentId())
         {
-            int cost = 0;
-            for (size_t i = 0; i < student.ExternalCost.size(); i++)
+            if (student.student.isStudentInPreference(internalStudent.student))
             {
-                cost += student.ExternalCost[i].second;
-            }
-
-            cost -= student.InternalCost;
-
-            if (cost > firstCurrentMinCost)
-            {
-                firstCurrentMinCost = cost;
-                firstSwappedStudent = student;
-                firstSwappedStudentGroup = group.groupNumber;
-            }
-
-            int a = 1;
-            if (student.student.getStudentId() == -1)
-            {
-                a = 2;
+                internalCost++;
             }
         }
     }
 
-    // Get student that can best be swapped
+    return internalCost;
+}
+
+std::pair<int, int> ImperfectMergeGrouper::calculateExternalCost(const KernighanStudent& student,
+                                                                 const KernighanLinStudentGroup& group)
+{
+    std::pair<int, int> groupCost;
+    groupCost.first = group.groupNumber;
+
+    int externalcost = 0;
+    for (auto& student2 : group.studentGroup)
+    {
+        if (student.student.isStudentInPreference(student2.student))
+        {
+            externalcost++;
+        }
+    }
+
+    groupCost.second = externalcost;
+
+    return groupCost;
+}
+
+void ImperfectMergeGrouper::swapHighestCostStudents()
+{
+    // Get current student that should be swapped based on its internal and external cost
+    std::pair<KernighanStudent, int> studentResult = getStudentWithHighestCost();
+    KernighanStudent firstSwappedStudent = studentResult.first;
+    int firstSwappedStudentGroup = studentResult.second;
+
+    // Get group that firstSwappedStudent should be swapped into
     int swapGroupNum = 0;
     int swapGroupCost = -1000;
     for (auto& costPair : firstSwappedStudent.ExternalCost)
@@ -150,11 +129,6 @@ void ImperfectMergeGrouper::swapHighestCostStudents()
         }
     }
 
-    //
-    int secondSwapCost = -1000;
-    KernighanStudent secondSwappedStudent;
-    int secondSwappedStudentGroup = 0;
-
     // Get group that with group number swapGroupNum
     auto secondSwapGroup = std::find_if(
         groups.begin(),
@@ -164,6 +138,10 @@ void ImperfectMergeGrouper::swapHighestCostStudents()
         }
     );
 
+    // Find best student in secondSwapGroup to swap with firstSwappedStudent
+    int secondSwapCost = -1000;
+    KernighanStudent secondSwappedStudent;
+    int secondSwappedStudentGroup = 0;
     for (auto& student : secondSwapGroup->studentGroup)
     {
         // Get external cost of first student group
@@ -176,10 +154,7 @@ void ImperfectMergeGrouper::swapHighestCostStudents()
         );
 
         int cost = 0;
-        //if (externalCostPair != student.ExternalCost.end())
-        //{
-            cost = externalCostPair->second - student.InternalCost;
-        //}
+        cost = externalCostPair->second - student.InternalCost;
 
         if (cost > secondSwapCost)
         {
@@ -189,14 +164,47 @@ void ImperfectMergeGrouper::swapHighestCostStudents()
         }
     }
 
-    std::cout << firstSwappedStudentGroup << ", " << firstSwappedStudent.student.getStudentId() << std::endl;
-    std::cout << secondSwappedStudentGroup << ", " << secondSwappedStudent.student.getStudentId() << std::endl;
+    // Swap students
+    swapStudents(firstSwappedStudent, firstSwappedStudentGroup,
+                 secondSwappedStudent, secondSwappedStudentGroup);
+}
 
+std::pair<KernighanStudent, int> ImperfectMergeGrouper::getStudentWithHighestCost()
+{
+    KernighanStudent highestCostStudent;
+    int highestCostStudentGroup = 0;
+    int currHighestStudentCost = -1000;
+    for (auto& group : groups)
+    {
+        for (auto& student : group.studentGroup)
+        {
+            int cost = 0;
+            std::for_each(student.ExternalCost.begin(), student.ExternalCost.end(),
+                          [&cost](std::pair<int, int> externalCost) {cost += externalCost.second;}
+            );
+
+            cost -= student.InternalCost;
+
+            if (cost > currHighestStudentCost)
+            {
+                currHighestStudentCost = cost;
+                highestCostStudent = student;
+                highestCostStudentGroup = group.groupNumber;
+            }
+        }
+    }
+
+    return std::pair<KernighanStudent, int>(highestCostStudent, highestCostStudentGroup);
+}
+
+void ImperfectMergeGrouper::swapStudents(const KernighanStudent& student1, int student1Group,
+                                         const KernighanStudent& student2, int student2Group)
+{
     // Swap students
     for (auto& group : groups)
     {
-        int firstStudentId = firstSwappedStudent.student.getStudentId();
-        if (group.groupNumber == firstSwappedStudentGroup)
+        int firstStudentId = student1.student.getStudentId();
+        if (group.groupNumber == student1Group)
         {
             group.studentGroup.erase(std::remove_if(
                 group.studentGroup.begin(),
@@ -206,11 +214,11 @@ void ImperfectMergeGrouper::swapHighestCostStudents()
                 }
             ), group.studentGroup.end());
 
-            group.studentGroup.push_back(secondSwappedStudent);
+            group.studentGroup.push_back(student2);
         }
 
-        int secondStudentId = secondSwappedStudent.student.getStudentId();
-        if (group.groupNumber == secondSwappedStudentGroup)
+        int secondStudentId = student2.student.getStudentId();
+        if (group.groupNumber == student2Group)
         {
             group.studentGroup.erase(std::remove_if(
                 group.studentGroup.begin(),
@@ -220,24 +228,14 @@ void ImperfectMergeGrouper::swapHighestCostStudents()
                 }
             ), group.studentGroup.end());
 
-            group.studentGroup.push_back(firstSwappedStudent);
-        }
-
-        for (auto student : group.studentGroup)
-        {
-            int b = 0;
-            if (student.student.getStudentId() == -1)
-            {
-                b = 1;
-
-            }
+            group.studentGroup.push_back(student1);
         }
     }
 }
 
-GroupedStudents* ImperfectMergeGrouper::createGroupedStudentsOutput()
+std::unique_ptr<GroupedStudents> ImperfectMergeGrouper::createGroupedStudentsOutput()
 {
-    GroupedStudents* groupedStudents = new GroupedStudents();
+    auto groupedStudents = std::unique_ptr<GroupedStudents>(new GroupedStudents());
 
     for (auto& group : groups)
     {
@@ -254,7 +252,7 @@ GroupedStudents* ImperfectMergeGrouper::createGroupedStudentsOutput()
 }
 
 
-GroupedStudents* ImperfectMergeGrouper::groupStudents(StudentSet& studentSet, int numGroups)
+std::unique_ptr<GroupedStudents> ImperfectMergeGrouper::groupStudents(StudentSet& studentSet, int numGroups)
 {
     this->groups = initialiseGroups(studentSet, numGroups);
 

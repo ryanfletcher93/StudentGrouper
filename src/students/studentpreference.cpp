@@ -20,7 +20,7 @@ StudentPreference::StudentPreference(std::vector<Student> students) {
 }
 
 
-bool StudentPreference::isStudentInPreferences(Student s) {
+bool StudentPreference::isStudentInPreferences(Student s) const {
     for (auto studentId : preferences) {
         if (studentId == s.getStudentId()) {
             return true;
@@ -30,11 +30,6 @@ bool StudentPreference::isStudentInPreferences(Student s) {
     return false;
 }
 
-std::vector<int> StudentPreference::getPreferencesIds() {
-    std::vector<int> returnIds;
-    for (int ids : this->preferences) {
-        returnIds.push_back(ids);
-    }
-
-    return returnIds;
+std::vector<int> StudentPreference::getPreferencesIds() const {
+    return this->preferences;
 }

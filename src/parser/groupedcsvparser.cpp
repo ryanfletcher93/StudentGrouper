@@ -10,16 +10,10 @@ GroupedCsvParser::GroupedCsvParser()
 
 }
 
-GroupedCsvParser::GroupedCsvParser(std::string filePath)  :
-    filePath(filePath)
-{
-}
+std::unique_ptr<GroupedStudents> GroupedCsvParser::parseGroupedFile(std::string filePath) {
 
-void GroupedCsvParser::setFilePath(std::string filePath) {
-    this->filePath = filePath;
-}
+    std::unique_ptr<GroupedStudents> groupedStudents;
 
-GroupedStudents GroupedCsvParser::parseGroupedFile() {
     std::vector<std::string> csvContents;
 
     std::filebuf fb;
@@ -43,18 +37,20 @@ GroupedStudents GroupedCsvParser::parseGroupedFile() {
 
         fb.close();
 
-        groupStudents(csvContents);
+        groupedStudents = groupStudents(csvContents);
     }
     else {
         std::cout << "Could not open file" << std::endl;
         std::cout << filePath << std::endl;
     }
 
-    return this->groupedStudents;
+    return groupedStudents;
 }
 
 
-void GroupedCsvParser::groupStudents(std::vector<std::string> csvContents) {
+std::unique_ptr<GroupedStudents> GroupedCsvParser::groupStudents(std::vector<std::string> csvContents) {
+    std::unique_ptr<GroupedStudents> groupedStudents = std::unique_ptr<GroupedStudents>(new GroupedStudents());
+
     std::map<int, StudentSet> m;
     for (std::string line : csvContents) {
         std::stringstream ss(line);
@@ -97,8 +93,10 @@ void GroupedCsvParser::groupStudents(std::vector<std::string> csvContents) {
     }
 
     for (auto mapIt = m.begin(); mapIt != m.end(); mapIt++) {
-        this->groupedStudents.addGroup(mapIt->second);
+        groupedStudents->addGroup(mapIt->second);
     }
+
+    return groupedStudents;
 }
 
 Student GroupedCsvParser::getStudentFromGroupedCsvLine(std::vector<std::string> csvContents, std::string idParam) {
