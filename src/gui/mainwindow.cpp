@@ -4,7 +4,7 @@
 #include "groupvisualiser.h"
 #include "ui_mainwindow.h"
 
-#include "../algorithm/imperfectmergegrouper.h"
+#include "../algorithm/kernighanlingrouper.h"
 
 #include <QFileDialog>
 #include <QGraphicsView>
@@ -17,13 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->viewResultsGroupComboBox->addItem("1");
-    ui->viewResultsGroupComboBox->addItem("2");
-    ui->viewResultsGroupComboBox->addItem("3");
-    ui->viewResultsGroupComboBox->addItem("4");
-    ui->viewResultsGroupComboBox->addItem("5");
-
     ui->numGroupsSpinBox->setValue(defaultNumberGroups);
+
+    // Disable results until grouped students are generated
+    ui->viewResultsGroupComboBox->setEnabled(false);
+    ui->viewResults->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -58,14 +56,14 @@ void MainWindow::on_analyseDataButton_clicked()
 
     // Group students
     int numGroups = ui->numGroupsSpinBox->value();
-    BaseGrouper* algorithm = new ImperfectMergeGrouper();
+    BaseGrouper* algorithm = new KernighanLinGrouper();
     this->groupedStudents = algorithmBackend.groupStudents(algorithm, numGroups);
 
     // Calculate and show happiness score
     int happinessScore = groupedStudents->calculateHappinessScore();
     ui->happinessScoreDisplay->setText(QString::number(happinessScore));
 
-    updateViewGroupOptions();
+    updateViewGroupOptions(AnalysisMode::GeneratedAnalysis);
 
     delete algorithm;
 }
@@ -77,8 +75,12 @@ void MainWindow::on_exportCsvButton_clicked()
         qExportFilePath = QString::fromStdString(exportCsvFilePath);
     }
     else {
-        qExportFilePath = QFileDialog::getSaveFileName(this,
-                tr("Save Image"), "GroupedStudents", tr("*.csv"));
+        qExportFilePath = QFileDialog::getSaveFileName(
+            this,
+            tr("Save Image"),
+            "GroupedStudents",
+            tr("*.csv")
+        );
     }
 
     ui->exportCsvDisplay->setText(qExportFilePath);
@@ -104,6 +106,7 @@ void MainWindow::on_viewResults_clicked()
     for (auto it : groupedStudents->getGroups()) {
         if (itIndex == comboBoxIndex) {
             studentSet = it;
+            break;
         }
 
         itIndex++;
@@ -126,7 +129,7 @@ void MainWindow::on_numGroupsSpinBox_valueChanged(int value)
     }
 }
 
-void MainWindow::on_selectGroupedStudentCsvButton_clicked()
+void MainWindow::on_externalGroupedFileSelectButton_clicked()
 {
     QString fileName;
     if (testing) {
@@ -139,9 +142,9 @@ void MainWindow::on_selectGroupedStudentCsvButton_clicked()
 
     try {
         this->groupedStudents = algorithmBackend.parseGroupedConfigFile(fileName.toStdString());
-        ui->csvFilePathDisplay_2->setText(fileName);
+        ui->externalGroupedFile->setText(fileName);
 
-        updateViewGroupOptions();
+        updateViewGroupOptions(AnalysisMode::ExternalAnalysis);
     }
     catch (...) {
         QMessageBox box;
@@ -150,12 +153,35 @@ void MainWindow::on_selectGroupedStudentCsvButton_clicked()
     }
 }
 
-void MainWindow::updateViewGroupOptions() {
+void MainWindow::updateViewGroupOptions(AnalysisMode analysisMode) {
+    ui->viewResultsGroupComboBox->setEnabled(true);
+    ui->viewResults->setEnabled(true);
+
     ui->viewResultsGroupComboBox->clear();
 
     int numGroups = this->groupedStudents->getGroups().size();
 
     for (int groupIt = 1; groupIt <= numGroups; groupIt++) {
         ui->viewResultsGroupComboBox->addItem(QString::number(groupIt));
+    }
+
+    QPalette activatedAnalysisMethod;
+    activatedAnalysisMethod.setColor(QPalette::Background, Qt::green);
+
+    QPalette deactivateAnalysisMethod;
+
+    if (analysisMode == AnalysisMode::GeneratedAnalysis){
+        ui->analysisFrame->setPalette(activatedAnalysisMethod);
+        ui->analysisFrame->setAutoFillBackground(true);
+
+        ui->externalFrame->setPalette(deactivateAnalysisMethod);
+        ui->externalFrame->setAutoFillBackground(true);
+    }
+    else if (analysisMode == AnalysisMode::ExternalAnalysis) {
+        ui->externalFrame->setPalette(activatedAnalysisMethod);
+        ui->externalFrame->setAutoFillBackground(true);
+
+        ui->analysisFrame->setPalette(deactivateAnalysisMethod);
+        ui->analysisFrame->setAutoFillBackground(true);
     }
 }

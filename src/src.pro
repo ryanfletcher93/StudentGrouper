@@ -2,8 +2,6 @@ QT += core gui widgets
 
 CONFIG += ordered
 
-CONFIG += c++11
-
 VPATH += \
     $$PWD/algorithm \
     $$PWD/gui \
@@ -14,8 +12,7 @@ VPATH += \
 SOURCES += \
     algorithmbackend.cpp \
     basegrouper.cpp \
-    imperfectmergegrouper.cpp \
-    kernighanlinalgorithm.cpp \
+    kernighanlingrouper.cpp \
     main.cpp \
     bidirectionaledge.cpp \
     edge.cpp \
@@ -34,8 +31,7 @@ SOURCES += \
 HEADERS += \
     algorithmbackend.h \
     basegrouper.h \
-    imperfectmergegrouper.h \
-    kernighanlinalgorithm.h \
+    kernighanlingrouper.h \
     bidirectionaledge.h \
     edge.h \
     groupvisualiser.h \

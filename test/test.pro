@@ -12,7 +12,7 @@ VPATH += ../src
 SOURCES += \
     algorithm/algorithmbackend.cpp \
     algorithm/basegrouper.cpp \
-    algorithm/imperfectmergegrouper.cpp \
+    algorithm/kernighanlingrouper.cpp \
     gui/bidirectionaledge.cpp \
     gui/edge.cpp \
     gui/groupvisualiser.cpp \
@@ -30,7 +30,7 @@ SOURCES += \
 HEADERS += \
     algorithm/algorithmbackend.h \
     algorithm/basegrouper.h \
-    algorithm/imperfectmergegrouper.h \
+    algorithm/kernighanlingrouper.h \
     gui/bidirectionaledge.h \
     gui/edge.h \
     gui/groupvisualiser.h \

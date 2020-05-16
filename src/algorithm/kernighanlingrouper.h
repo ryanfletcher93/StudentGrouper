@@ -1,19 +1,19 @@
-    #ifndef IMPERFECTMERGEGROUPER_H
-#define IMPERFECTMERGEGROUPER_H
+#ifndef KERNIGHANLINGROUPER_H
+#define KERNIGHANLINGROUPER_H
 
 #include "basegrouper.h"
 #include "../students/groupedstudents.h"
 
 #include <memory>
 
-struct KernighanStudent {
+struct KernighanLinStudent {
     Student student;
     std::vector<std::pair<int, int>> ExternalCost;
     int InternalCost = 0;
 };
 
 struct KernighanLinStudentGroup {
-    std::vector<KernighanStudent> studentGroup;
+    std::vector<KernighanLinStudent> studentGroup;
     int groupNumber = 0;
 };
 
@@ -21,10 +21,10 @@ struct KernighanLinStudentGroup {
  * @brief The ImperfectMergeGrouper class
  * Group the students based on a merge algorithm
  */
-class ImperfectMergeGrouper : public BaseGrouper
+class KernighanLinGrouper : public BaseGrouper
 {
 public:
-    ImperfectMergeGrouper();
+    KernighanLinGrouper();
 
     std::unique_ptr<GroupedStudents> groupStudents(StudentSet& studentSet, int numGroups) override;
 
@@ -33,15 +33,15 @@ private:
 
     void calculateCosts();
 
-    int calculateInternalCost(const KernighanStudent& student, const KernighanLinStudentGroup& group);
-    std::pair<int, int> calculateExternalCost(const KernighanStudent& student, const KernighanLinStudentGroup& group);
+    int calculateInternalCost(const KernighanLinStudent& student, const KernighanLinStudentGroup& group);
+    std::pair<int, int> calculateExternalCost(const KernighanLinStudent& student, const KernighanLinStudentGroup& group);
 
     void swapHighestCostStudents();
 
-    std::pair<KernighanStudent, int> getStudentWithHighestCost();
+    std::pair<KernighanLinStudent, int> getStudentWithHighestCost();
 
-    void swapStudents(const KernighanStudent& student1, int student1Group,
-                      const KernighanStudent& student2, int student2Group);
+    void swapStudents(const KernighanLinStudent& student1, int student1Group,
+                      const KernighanLinStudent& student2, int student2Group);
 
     std::unique_ptr<GroupedStudents> createGroupedStudentsOutput();
 
@@ -49,4 +49,4 @@ private:
     std::vector<KernighanLinStudentGroup> groups;
 };
 
-#endif // IMPERFECTMERGEGROUPER_H
+#endif // KERNIGHANLINGROUPER_H

@@ -1,6 +1,6 @@
 #include "algorithmbackend.h"
 
-#include "../algorithm/imperfectmergegrouper.h"
+#include "../algorithm/kernighanlingrouper.h"
 
 #include <iostream>
 #include <fstream>

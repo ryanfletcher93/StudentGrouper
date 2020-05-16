@@ -17,144 +17,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="selectStudentCsvButton">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>90</y>
-      <width>191</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Select Student Csv File</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="csvFilePathDisplay">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>60</y>
-      <width>281</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-    <property name="placeholderText">
-     <string>Select student csv file</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="analyseDataButton">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>230</y>
-      <width>181</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Analyse Data</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="exportCsvDisplay">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>320</y>
-      <width>271</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Set export csv file</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="exportCsvButton">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>350</y>
-      <width>191</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Export Results</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="happinessScoreDisplay">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>260</y>
-      <width>81</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="happinessScoreLabel">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>260</y>
-      <width>121</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Happiness Score</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="numberGroupsLabel">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>180</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Number of Groups</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="viewResults">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>470</y>
-      <width>151</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>View Results</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="viewResultsGroupComboBox">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>470</y>
-      <width>91</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QSpinBox" name="numGroupsSpinBox">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>180</y>
-      <width>42</width>
-      <height>25</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="Line" name="line">
+   <widget class="Line" name="verticalLine">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -167,36 +30,7 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QLineEdit" name="csvFilePathDisplay_2">
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>190</y>
-      <width>281</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-    <property name="placeholderText">
-     <string>Select grouped student csv file</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="selectGroupedStudentCsvButton">
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>220</y>
-      <width>191</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Select Groupd Student Csv File</string>
-    </property>
-   </widget>
-   <widget class="Line" name="line_2">
+   <widget class="Line" name="horizontalLine">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -209,6 +43,225 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
+   <widget class="QWidget" name="analysisFrame" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>401</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <widget class="QLineEdit" name="csvFilePathDisplay">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>60</y>
+       <width>281</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="placeholderText">
+      <string>Select student csv file</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="selectStudentCsvButton">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>90</y>
+       <width>191</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select Student Csv File</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="numberGroupsLabel">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>180</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Number of Groups</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="numGroupsSpinBox">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>180</y>
+       <width>42</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="analyseDataButton">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>230</y>
+       <width>181</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Analyse Data</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="happinessScoreLabel">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>260</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Happiness Score</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="happinessScoreDisplay">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>260</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="exportCsvDisplay">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>320</y>
+       <width>271</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Set export csv file</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="exportCsvButton">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>350</y>
+       <width>191</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Export Results</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="externalFrame">
+    <property name="geometry">
+     <rect>
+      <x>399</x>
+      <y>-1</y>
+      <width>401</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLineEdit" name="externalGroupedFile">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>190</y>
+       <width>281</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="placeholderText">
+      <string>Select grouped student csv file</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="externalGroupedFileSelectButton">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>220</y>
+       <width>281</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select Groupd Student Csv File</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="viewResultsFrame">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>409</y>
+      <width>801</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="viewResults">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>60</y>
+       <width>151</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>View Results</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="viewResultsGroupComboBox">
+     <property name="geometry">
+      <rect>
+       <x>490</x>
+       <y>60</y>
+       <width>91</width>
+       <height>24</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <zorder>viewResultsFrame</zorder>
+   <zorder>externalFrame</zorder>
+   <zorder>analysisFrame</zorder>
+   <zorder>verticalLine</zorder>
+   <zorder>horizontalLine</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -216,7 +269,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

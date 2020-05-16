@@ -4,11 +4,19 @@
 #include "../algorithm/algorithmbackend.h"
 #include "../students/groupedstudents.h"
 
+#include "../ui_mainwindow.h"
+
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+enum AnalysisMode {
+    None,
+    GeneratedAnalysis,
+    ExternalAnalysis
+};
 
 class MainWindow : public QMainWindow
 {
@@ -37,9 +45,9 @@ private slots:
 
     void on_numGroupsSpinBox_valueChanged(int arg1);
 
-    void on_selectGroupedStudentCsvButton_clicked();
+    void on_externalGroupedFileSelectButton_clicked();
 
-    void updateViewGroupOptions();
+    void updateViewGroupOptions(AnalysisMode analysisMode);
 
 private:
     Ui::MainWindow *ui;
@@ -47,5 +55,7 @@ private:
     AlgorithmBackend algorithmBackend;
 
     std::unique_ptr<GroupedStudents> groupedStudents;
+
+    AnalysisMode analysisMode = AnalysisMode::None;
 };
 #endif // MAINWINDOW_H

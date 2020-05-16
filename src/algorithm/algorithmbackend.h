@@ -4,7 +4,6 @@
 #include "../parser/csvparser.h"
 #include "../parser/groupedcsvparser.h"
 #include "../algorithm/basegrouper.h"
-#include "../algorithm/kernighanlinalgorithm.h"
 #include "../students/groupedstudents.h"
 
 #include <string>

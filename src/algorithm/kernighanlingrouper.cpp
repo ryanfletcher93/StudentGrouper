@@ -1,4 +1,4 @@
-#include "imperfectmergegrouper.h"
+#include "kernighanlingrouper.h"
 
 #include <math.h>
 #include <iostream>
@@ -8,12 +8,12 @@
 
 using std::vector;
 
-ImperfectMergeGrouper::ImperfectMergeGrouper()
+KernighanLinGrouper::KernighanLinGrouper()
 {
 
 }
 
-vector<KernighanLinStudentGroup> ImperfectMergeGrouper::initialiseGroups(StudentSet studentSet, int numGroups)
+vector<KernighanLinStudentGroup> KernighanLinGrouper::initialiseGroups(StudentSet studentSet, int numGroups)
 {
     vector<KernighanLinStudentGroup> groups;
 
@@ -27,7 +27,7 @@ vector<KernighanLinStudentGroup> ImperfectMergeGrouper::initialiseGroups(Student
     KernighanLinStudentGroup tempGroup;
     for (auto& student : studentSet.getStudentList())
     {
-        KernighanStudent kStudent;
+        KernighanLinStudent kStudent;
         kStudent.student = student;
         tempGroup.studentGroup.push_back(kStudent);
 
@@ -50,7 +50,7 @@ vector<KernighanLinStudentGroup> ImperfectMergeGrouper::initialiseGroups(Student
     return groups;
 }
 
-void ImperfectMergeGrouper::calculateCosts()
+void KernighanLinGrouper::calculateCosts()
 {
     for (auto& group : groups)
     {
@@ -71,7 +71,7 @@ void ImperfectMergeGrouper::calculateCosts()
     }
 }
 
-int ImperfectMergeGrouper::calculateInternalCost(const KernighanStudent& student,
+int KernighanLinGrouper::calculateInternalCost(const KernighanLinStudent& student,
                                                  const KernighanLinStudentGroup& group)
 {
     // Calculate internal costs
@@ -90,7 +90,7 @@ int ImperfectMergeGrouper::calculateInternalCost(const KernighanStudent& student
     return internalCost;
 }
 
-std::pair<int, int> ImperfectMergeGrouper::calculateExternalCost(const KernighanStudent& student,
+std::pair<int, int> KernighanLinGrouper::calculateExternalCost(const KernighanLinStudent& student,
                                                                  const KernighanLinStudentGroup& group)
 {
     std::pair<int, int> groupCost;
@@ -110,11 +110,11 @@ std::pair<int, int> ImperfectMergeGrouper::calculateExternalCost(const Kernighan
     return groupCost;
 }
 
-void ImperfectMergeGrouper::swapHighestCostStudents()
+void KernighanLinGrouper::swapHighestCostStudents()
 {
     // Get current student that should be swapped based on its internal and external cost
-    std::pair<KernighanStudent, int> studentResult = getStudentWithHighestCost();
-    KernighanStudent firstSwappedStudent = studentResult.first;
+    std::pair<KernighanLinStudent, int> studentResult = getStudentWithHighestCost();
+    KernighanLinStudent firstSwappedStudent = studentResult.first;
     int firstSwappedStudentGroup = studentResult.second;
 
     // Get group that firstSwappedStudent should be swapped into
@@ -140,7 +140,7 @@ void ImperfectMergeGrouper::swapHighestCostStudents()
 
     // Find best student in secondSwapGroup to swap with firstSwappedStudent
     int secondSwapCost = -1000;
-    KernighanStudent secondSwappedStudent;
+    KernighanLinStudent secondSwappedStudent;
     int secondSwappedStudentGroup = 0;
     for (auto& student : secondSwapGroup->studentGroup)
     {
@@ -169,9 +169,9 @@ void ImperfectMergeGrouper::swapHighestCostStudents()
                  secondSwappedStudent, secondSwappedStudentGroup);
 }
 
-std::pair<KernighanStudent, int> ImperfectMergeGrouper::getStudentWithHighestCost()
+std::pair<KernighanLinStudent, int> KernighanLinGrouper::getStudentWithHighestCost()
 {
-    KernighanStudent highestCostStudent;
+    KernighanLinStudent highestCostStudent;
     int highestCostStudentGroup = 0;
     int currHighestStudentCost = -1000;
     for (auto& group : groups)
@@ -194,11 +194,11 @@ std::pair<KernighanStudent, int> ImperfectMergeGrouper::getStudentWithHighestCos
         }
     }
 
-    return std::pair<KernighanStudent, int>(highestCostStudent, highestCostStudentGroup);
+    return std::pair<KernighanLinStudent, int>(highestCostStudent, highestCostStudentGroup);
 }
 
-void ImperfectMergeGrouper::swapStudents(const KernighanStudent& student1, int student1Group,
-                                         const KernighanStudent& student2, int student2Group)
+void KernighanLinGrouper::swapStudents(const KernighanLinStudent& student1, int student1Group,
+                                         const KernighanLinStudent& student2, int student2Group)
 {
     // Swap students
     for (auto& group : groups)
@@ -209,7 +209,7 @@ void ImperfectMergeGrouper::swapStudents(const KernighanStudent& student1, int s
             group.studentGroup.erase(std::remove_if(
                 group.studentGroup.begin(),
                 group.studentGroup.end(),
-                [&firstStudentId](KernighanStudent value) {
+                [&firstStudentId](KernighanLinStudent value) {
                     return value.student.getStudentId() == firstStudentId;
                 }
             ), group.studentGroup.end());
@@ -223,7 +223,7 @@ void ImperfectMergeGrouper::swapStudents(const KernighanStudent& student1, int s
             group.studentGroup.erase(std::remove_if(
                 group.studentGroup.begin(),
                 group.studentGroup.end(),
-                [&secondStudentId](KernighanStudent value) {
+                [&secondStudentId](KernighanLinStudent value) {
                     return value.student.getStudentId() == secondStudentId;
                 }
             ), group.studentGroup.end());
@@ -233,7 +233,7 @@ void ImperfectMergeGrouper::swapStudents(const KernighanStudent& student1, int s
     }
 }
 
-std::unique_ptr<GroupedStudents> ImperfectMergeGrouper::createGroupedStudentsOutput()
+std::unique_ptr<GroupedStudents> KernighanLinGrouper::createGroupedStudentsOutput()
 {
     auto groupedStudents = std::unique_ptr<GroupedStudents>(new GroupedStudents());
 
@@ -252,7 +252,7 @@ std::unique_ptr<GroupedStudents> ImperfectMergeGrouper::createGroupedStudentsOut
 }
 
 
-std::unique_ptr<GroupedStudents> ImperfectMergeGrouper::groupStudents(StudentSet& studentSet, int numGroups)
+std::unique_ptr<GroupedStudents> KernighanLinGrouper::groupStudents(StudentSet& studentSet, int numGroups)
 {
     this->groups = initialiseGroups(studentSet, numGroups);
 
