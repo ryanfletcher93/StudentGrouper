@@ -19,6 +19,9 @@ class GroupVisualiser : public QGraphicsView
     Q_OBJECT
 
 public:
+
+    ~GroupVisualiser();
+
     /**
      * @brief GroupVisualiser
      * Initialise all relevant variables, @param parent
@@ -60,6 +63,8 @@ private:
     void drawNodeEdges(Node *node);
 
     std::vector<Node *> nodes;
+    std::vector<Edge *> edges;
+
     StudentSet studentSet;
     std::string groupString;
 

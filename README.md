@@ -11,7 +11,7 @@ For a use guide, see "How to use StudentGrouper.docx"
 ----------
 TODO List:
 ----------
-- Move some of the display and backend adaptor logic to make more sense
 - Create some more thorough unit tests (and if needed refactor the code)
 - Include ability to click and drag nodes
-- Include ability to highlight/filter nodes and edges
+- Have advanced options for algorithm
+

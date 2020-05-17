@@ -4,10 +4,18 @@
 #include "unidirectionaledge.h"
 
 #include <math.h>
+#include <iostream>
 
 #define RADIUS 500
 #define DEG_CIRCLE 360
 #define PI 3.14159265
+
+GroupVisualiser::~GroupVisualiser()
+{
+    std::for_each(nodes.begin(), nodes.end(), [](Node* node) {delete node;});
+
+    std::for_each(edges.begin(), edges.end(), [](Edge* edge) {delete edge;});
+}
 
 GroupVisualiser::GroupVisualiser(QWidget* parent) :
     QGraphicsView(parent)
@@ -70,14 +78,21 @@ void GroupVisualiser::drawNodeEdges(Node *n) {
             continue;
         }
 
+        Edge* tempEdge = nullptr;
         if (s1.isStudentInPreference(s2) && s2.isStudentInPreference(s1)) {
-            scene->addItem(new BidirectionalEdge(n, node));
+            tempEdge = new BidirectionalEdge(n, node);
+            scene->addItem(tempEdge);
+            edges.push_back(tempEdge);
         }
         else if (s1.isStudentInPreference(s2)) {
-            scene->addItem(new UnidirectionalEdge(n, node));
+            tempEdge = new UnidirectionalEdge(n, node);
+            scene->addItem(tempEdge);
+            edges.push_back(tempEdge);
         }
         else if (s2.isStudentInPreference(s1)) {
-            scene->addItem(new UnidirectionalEdge(node, n));
+            tempEdge = new UnidirectionalEdge(node, n);
+            scene->addItem(tempEdge);
+            edges.push_back(tempEdge);
         }
     }
 }
