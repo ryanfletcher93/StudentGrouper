@@ -19,6 +19,11 @@ StudentPreference::StudentPreference(std::vector<Student> students) {
     preferences = tempPreference;
 }
 
+StudentPreference::StudentPreference(std::vector<int> studentIds)
+{
+    preferences = studentIds;
+}
+
 
 bool StudentPreference::isStudentInPreferences(Student s) const {
     for (auto studentId : preferences) {

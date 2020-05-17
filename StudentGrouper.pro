@@ -19,11 +19,6 @@ SUBDIRS += \
     src \
     test
 
-INCLUDEPATH += C:\\Users\\Ryan\ Fletcher\\Documents\\Programming\ Projects\\google-test\\googletest \
-    C:\\Users\\Ryan\ Fletcher\\Documents\\Programming\ Projects\\google-test\\googletest\\include \
-    C:\\Users\\Ryan\ Fletcher\\Documents\\Programming\ Projects\\google-test\\googlemock \
-    C:\\Users\\Ryan\ Fletcher\\Documents\\Programming\ Projects\\google-test\\googlemock\\include
-
 # Default rules for deployment.
 target.path = .\\src\\bin
 # else: unix:!android: target.path = C:\\Users\\Ryan\ Fletcher\\Documents\\Programming\ Projects\\Qt\\StudentGrouper\\bin

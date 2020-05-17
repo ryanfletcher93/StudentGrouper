@@ -17,6 +17,7 @@ public:
     /// Constructors for student preferences
     StudentPreference();
     StudentPreference(std::vector<Student> students);
+    StudentPreference(std::vector<int> studentIds);
 
     /**
      * @brief isStudentInPreferences
