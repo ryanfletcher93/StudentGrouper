@@ -1,6 +1,7 @@
 #ifndef ALGORITHMBACKEND_H
 #define ALGORITHMBACKEND_H
 
+#include "../gui/progressupdator.h"
 #include "../parser/csvparser.h"
 #include "../parser/groupedcsvparser.h"
 #include "../algorithm/basegrouper.h"
@@ -52,7 +53,8 @@ public:
       * @brief gropuStudnets
       *
       */
-    std::unique_ptr<GroupedStudents> groupStudents(BaseGrouper* groupingAlgorithm, int numGroups);
+    std::unique_ptr<GroupedStudents> groupStudents(BaseGrouper* groupingAlgorithm,
+                                                   int numGroups, ProgressUpdator* progressUpdator);
 
 
     /**

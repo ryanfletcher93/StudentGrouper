@@ -4,7 +4,7 @@
 #include "../algorithm/algorithmbackend.h"
 #include "../students/groupedstudents.h"
 
-#include "../ui_mainwindow.h"
+#include "ui_mainwindow.h"
 
 #include <QMainWindow>
 
@@ -48,6 +48,9 @@ private slots:
     void on_externalGroupedFileSelectButton_clicked();
 
     void updateViewGroupOptions(AnalysisMode analysisMode);
+
+public slots:
+    void updateProgressBar(int value);
 
 private:
     Ui::MainWindow *ui;

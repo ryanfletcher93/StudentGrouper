@@ -24,10 +24,10 @@ void KernighanLinAlgorithmTest::groupedStudentSizeChecks()
 
     StudentSet studentSet = createStudentSet(numStudents, numPreferences);
 
-    klGrouperUPtr kernighanLinGrouper = klGrouperUPtr(new KernighanLinGrouper);
+    klGrouperUPtr kernighanLinGrouper = klGrouperUPtr(new KernighanLinGrouper());
 
     // Check the output has the correct number of groups
-    groupedStudentUPtr groupedStudents = kernighanLinGrouper->groupStudents(studentSet, numGroups);
+    groupedStudentUPtr groupedStudents = kernighanLinGrouper->groupStudents(studentSet, numGroups, nullptr);
     QVERIFY(groupedStudents->getGroups().size() == (size_t) numGroups);
 
     // Check if size of each group is evenly split based on students and number of groups
@@ -48,8 +48,8 @@ void KernighanLinAlgorithmTest::checkOneGroupIsValid()
 
     StudentSet studentSet = createStudentSet(numStudents, numPreferences);
 
-    klGrouperUPtr kernighanLinGrouper = klGrouperUPtr(new KernighanLinGrouper);
-    groupedStudentUPtr groupedStudents = kernighanLinGrouper->groupStudents(studentSet, numGroups);
+    klGrouperUPtr kernighanLinGrouper = klGrouperUPtr(new KernighanLinGrouper());
+    groupedStudentUPtr groupedStudents = kernighanLinGrouper->groupStudents(studentSet, numGroups, nullptr);
 
     // Check that after calculation
     QVERIFY(groupedStudents->calculateHappinessScore() == studentSet.getHappinessScore());

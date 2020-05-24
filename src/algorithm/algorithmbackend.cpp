@@ -50,9 +50,10 @@ bool AlgorithmBackend::hasValidUngroupedInputFile()
 }
 
 
-std::unique_ptr<GroupedStudents> AlgorithmBackend::groupStudents(BaseGrouper *groupingAlgorithm, int numGroups)
+std::unique_ptr<GroupedStudents> AlgorithmBackend::groupStudents(BaseGrouper *groupingAlgorithm,
+                                                                 int numGroups, ProgressUpdator* progressUpdator)
 {
-    return groupingAlgorithm->groupStudents(this->studentSet, numGroups);
+    return groupingAlgorithm->groupStudents(this->studentSet, numGroups, progressUpdator);
 }
 
 

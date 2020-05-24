@@ -2,6 +2,7 @@
 #define KERNIGHANLINGROUPER_H
 
 #include "basegrouper.h"
+#include "../gui/progressupdator.h"
 #include "../students/groupedstudents.h"
 
 #include <memory>
@@ -24,9 +25,8 @@ struct KernighanLinStudentGroup {
 class KernighanLinGrouper : public BaseGrouper
 {
 public:
-    KernighanLinGrouper();
-
-    std::unique_ptr<GroupedStudents> groupStudents(StudentSet& studentSet, int numGroups) override;
+    std::unique_ptr<GroupedStudents> groupStudents(StudentSet& studentSet, int numGroups,
+                                                   ProgressUpdator* progressUpdator) override;
 
 private:
     std::vector<KernighanLinStudentGroup> initialiseGroups(StudentSet studentSet, int numGroups);

@@ -10,6 +10,7 @@ VPATH += \
     $$PWD/app
 
 SOURCES += \
+    progressupdator.cpp \
     algorithmbackend.cpp \
     basegrouper.cpp \
     kernighanlingrouper.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
 
 
 HEADERS += \
+    progressupdator.h \
     algorithmbackend.h \
     basegrouper.h \
     kernighanlingrouper.h \

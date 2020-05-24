@@ -1,8 +1,11 @@
 #ifndef BASEGROUPER_H
 #define BASEGROUPER_H
 
+#include "../gui/progressupdator.h"
 #include "../students/studentset.h"
 #include "../students/groupedstudents.h"
+
+#include <QObject>
 
 #include <memory>
 
@@ -14,14 +17,16 @@
 class BaseGrouper
 {
 public:
-    virtual ~BaseGrouper();
+
+    virtual ~BaseGrouper() {}
     /**
      * @brief groupStudents
      * Pure virtual method to allow subclasses to define grouping
      *
      * @return
      */
-    virtual std::unique_ptr<GroupedStudents> groupStudents(StudentSet& studentSet, int numGroups) = 0;
+    virtual std::unique_ptr<GroupedStudents> groupStudents(StudentSet& studentSet, int numGroups,
+                                                           ProgressUpdator* progressUpdator) = 0;
 
 private:
 

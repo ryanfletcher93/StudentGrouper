@@ -3,15 +3,11 @@
 #include <math.h>
 #include <iostream>
 
+#include "../gui/progressupdator.h"
 #include "../students/student.h"
 #include "../students/studentset.h"
 
 using std::vector;
-
-KernighanLinGrouper::KernighanLinGrouper()
-{
-
-}
 
 vector<KernighanLinStudentGroup> KernighanLinGrouper::initialiseGroups(StudentSet studentSet, int numGroups)
 {
@@ -252,7 +248,8 @@ std::unique_ptr<GroupedStudents> KernighanLinGrouper::createGroupedStudentsOutpu
 }
 
 
-std::unique_ptr<GroupedStudents> KernighanLinGrouper::groupStudents(StudentSet& studentSet, int numGroups)
+std::unique_ptr<GroupedStudents> KernighanLinGrouper::groupStudents(StudentSet& studentSet, int numGroups,
+                                                                    ProgressUpdator* progressUpdator)
 {
     this->groups = initialiseGroups(studentSet, numGroups);
 
@@ -260,6 +257,11 @@ std::unique_ptr<GroupedStudents> KernighanLinGrouper::groupStudents(StudentSet& 
     {
         calculateCosts();
         swapHighestCostStudents();
+
+        if (progressUpdator)
+        {
+            progressUpdator->setProgress(floor(i / studentSet.getStudentList().size()) * 100);
+        }
     }
 
     return createGroupedStudentsOutput();

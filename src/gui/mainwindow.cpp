@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 
 #include "groupvisualiser.h"
+#include "progressupdator.h"
 #include "ui_mainwindow.h"
 
 #include "../algorithm/kernighanlingrouper.h"
@@ -22,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
     // Disable results until grouped students are generated
     ui->viewResultsGroupComboBox->setEnabled(false);
     ui->viewResults->setEnabled(false);
+
+    ui->progressBar->setRange(0, 100);
+    ui->progressBar->setValue(0);
 }
 
 MainWindow::~MainWindow()
@@ -46,6 +50,8 @@ void MainWindow::on_selectStudentCsvButton_clicked()
 
 void MainWindow::on_analyseDataButton_clicked()
 {
+    ui->progressBar->setValue(0);
+
     if (!algorithmBackend.hasValidUngroupedInputFile()) {
         QMessageBox box;
         box.setText("No input csv chosen, please select input csv first");
@@ -57,7 +63,14 @@ void MainWindow::on_analyseDataButton_clicked()
     // Group students
     int numGroups = ui->numGroupsSpinBox->value();
     BaseGrouper* algorithm = new KernighanLinGrouper();
-    this->groupedStudents = algorithmBackend.groupStudents(algorithm, numGroups);
+    ProgressUpdator* progressUpdator = new ProgressUpdator(this);
+
+    //QObject::connect(&*progressUpdator, SIGNAL(updateProgress(int)), &*this, SLOT(updateProgressBar(int)));
+    this->groupedStudents = algorithmBackend.groupStudents(algorithm, numGroups, progressUpdator);
+
+    // Grouping has finished to clean up progress bars
+    delete progressUpdator;
+    ui->progressBar->setValue(100);
 
     // Calculate and show happiness score
     int happinessScore = groupedStudents->calculateHappinessScore();
@@ -184,4 +197,9 @@ void MainWindow::updateViewGroupOptions(AnalysisMode analysisMode) {
         ui->analysisFrame->setPalette(deactivateAnalysisMethod);
         ui->analysisFrame->setAutoFillBackground(true);
     }
+}
+
+void MainWindow::updateProgressBar(int value)
+{
+    ui->progressBar->setValue(value);
 }
